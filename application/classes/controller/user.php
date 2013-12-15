@@ -49,45 +49,6 @@ class Controller_User extends Controller
 	}
 
 	/**
-	 *
-	 * 登录后自己的feed页
-	 *
-	 * @param array $_GET = array(
-	 * 	id => 用户UID,
-	 * 	type => feed的二级分类
-	 * )
-	 */
-	public function action_feeds()
-	{	
-        $arrParam = $this->_user_common();
-        if (! $arrParam['isAdmin'])	{
-            //动态汇总只有主人模式，客人只能进入动态页面
-            $this->template()->set_filename("user/_other_people_feeds");
-            return $this->_otherPeople();
-        }
-        $intCurSubtype = (int) $this->request->param('type', 0);
-        if (! isset(Model_Logic_Feed2::$arrSubtype[$intCurSubtype])) {
-            $intCurSubtype = 0;
-        }
-        if ($intCurSubtype == Model_Logic_Feed2::SUBTYPE_SELF) {
-            $bolNoReduce = true;
-        } else {
-            $bolNoReduce = false;
-        }
-		$objFeed2 = new Model_Logic_Feed2();
-		$intCount = self::USER_FEED_PAGE_COUNT;
-		$intLasttime = time();
-		$arrFeed = $objFeed2->getUserFeedList(array('user_id' => $this->_uid, 'offset' => 0, 'count' => $intCount,
-		    'lasttime' => $intLasttime, 'type' => $intCurSubtype, 'no_reduce' => $bolNoReduce));
-		$this->template->set('feeds', $arrFeed);
-		$this->template->set('feeds_page_count', $intCount);
-		$this->template->set('feeds_lasttime', $intLasttime);
-		$this->template->set('subtype_list', Model_Logic_Feed2::$arrSubtype);
-		$this->template->set('cur_subtype', $intCurSubtype);
-		$this->template->set('forward_text_max_len', Model_Logic_Feed2::FORWARD_FEED_TEXT_MAX_LEN);
-	}
-
-	/**
 	 * 以后统一到user/ID页面下
 	 * 
 	 */
@@ -210,73 +171,6 @@ class Controller_User extends Controller
 	    $this->template->set('fans_total_num', (int) $total);
 	    $this->template->set('fans_page_count', self::FANS_PAGE_COUNT);
 	    $this->template->set('fans_page_offset', $intOffset);
-	}
-
-	/**
-	 *
-	 * 个人圈子页
-	 *
-	 * @param array $_GET = array(
-	 * 	id => 用户UID,
-	 * 	type => 二级tab类型，0：已关注， 1：已共享, 默认，0
-	 * 	offset => 起始位置, 默认0
-	 * 	count => 数量， 默认12
-	 * )
-	 */
-	public function action_circle()
-	{
-		$arrGetParam = $this->request->query();
-		if (array_key_exists('type', $arrGetParam)) {
-			//老的url格式，需要做301跳转 2012-12-31之后可以删除这个判断
-			$uid = (int) $this->request->param("id");
-			if($uid < 1) {
-				$uid = $this->_uid;
-			}
-			if ($uid < 1) {
-				$this->request->redirect('/');
-			}
-			$this->request->redirect(Util::userUrl($uid, 'circle', $arrGetParam), 301);
-			die();
-		}
-		
-	    $arrParam = $this->_user_common();
-	    $type = (int) $this->request->param('type', 2);
-	    $offset = (int) $this->request->query('offset');
-	    $count = (int) $this->request->query('count');
-	    if ($offset < 0) $offset = 0;
-	    if($count <= 0) $count = 12;
-
-        //圈子列表
-        if ($type==2){
-        	$objLogicCircle = new Model_Logic_Circle();
-        	$total = 0;
-			$arrCircleList = $objLogicCircle->created($arrParam['uid'], $offset, $count, 
-				$arrParam['isAdmin'] ? 'host':'guest', $total);
-			$cids = array_keys($arrCircleList);
-	   		$arrCircles = array(
-	   			'count' => $total ,
-	   			'data' => $this->objLogicUser->getCircleVideos($cids, $this->_uid)
-	   		);     
-        } else {
-        	Profiler::startMethodExec();
-        	if($type) {
-	            $cids = $this->objLogicUser->getSharedCirclesByUid($arrParam['uid'], true);
-	            Profiler::endMethodExec(__FUNCTION__.' getSharedCirclesByUid');
-	        } else {
-	            $cids = $this->objLogicUser->getUserCirclesByUid($arrParam['uid'], true, 1);
-	            Profiler::endMethodExec(__FUNCTION__.' getUserCirclesByUid');
-	        }
-	        $arrCircles['count'] = count($cids);
-	        $cids = array_slice($cids, $offset, $count);
-	        Profiler::startMethodExec();
-	        $arrCircles['data'] = $this->objLogicUser->getCircleVideos($cids, $this->_uid);
-	        Profiler::endMethodExec(__FUNCTION__.' getCircleVideos');	
-        }
-        //type
-        $this->template->set("type", $type);
-        $this->template->set("offset", $offset);
-        $this->template->set("count", $count);        	
-        $this->template->set('user_circle_list', $arrCircles);
 	}
 
 	/**
