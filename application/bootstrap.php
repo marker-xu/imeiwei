@@ -92,6 +92,8 @@ $arrTmpMod = array(
 	'unittest'   => MODPATH.'unittest',      // Unit testing
 	'image'      => MODPATH.'image',      // Image manipulation
 	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+    'pagination' => APPPATH.'/modules/pagination',
+    'opensdk'    => APPPATH.'/modules/opensdk',
 );
 if (defined('DEBUG_MODE') && DEBUG_MODE) {
 	$arrTmpMod += array(
