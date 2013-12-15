@@ -1,12 +1,20 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php 
 
-class Model_Data_User extends Model_Data_MongoCollection {
-	
-	
-	public function __construct() {
-		parent::__construct("cloudsearch", "qidian", "users");
+/**
+ * 用户
+ * @author xucongbin
+ */
+class Model_Data_User extends Model_Data_MongoCollection
+{
+    const MEDAL_SUBSCRIBE_CIRCLE = 1; // 关注圈子 
+    const MEDAL_INVITE_FRIEND = 2; // 邀请好友
+    const MEDAL_CREATE_CIRCLE = 3; //  成功创建圈子
+    
+	public function __construct()
+	{
+        parent::__construct('web_mongo', 'video_search', 'user');
 	}
-	
+
 	/**
 	 * 查询单个用户的信息
 	 * @param string $id
@@ -15,7 +23,7 @@ class Model_Data_User extends Model_Data_MongoCollection {
 	 */
 	public function get($id, $fields = array())
 	{
-	    return $this->findOne(array('id' => strval($id)), $fields);
+	    return $this->findOne(array('_id' => intval($id)), $fields);
 	}
 	
 	/**
@@ -30,7 +38,7 @@ class Model_Data_User extends Model_Data_MongoCollection {
 	    if (!$ids) {
 	        return array();
 	    }
-	    $users = $this->find(array('id' => array('$in' => $ids)), $fields);
+	    $users = $this->find(array('_id' => array('$in' => $ids)), $fields);
 	    if ($keepOrder) {
 	        $tmp = array();
 	        foreach ($ids as $id) {
@@ -42,6 +50,7 @@ class Model_Data_User extends Model_Data_MongoCollection {
 	    }
 	    return $users;
 	}
+	
 	/**
 	 * 根据昵称查询多个用户的信息
 	 * @param array $arrNick
@@ -54,7 +63,7 @@ class Model_Data_User extends Model_Data_MongoCollection {
 	    if (empty($arrNick)) {
 	        return array();
 	    }
-	    $users = $this->find(array('name' => array('$in' => $arrNick)), $fields);
+	    $users = $this->find(array('nick' => array('$in' => $arrNick)), $fields);
 
 	    return $users;
 	}
@@ -69,12 +78,12 @@ class Model_Data_User extends Model_Data_MongoCollection {
 	 */
 	public function addUser($email, array $arrParams) {
 		JKit::$log->debug(__FUNCTION__." email-{$email}, params-", $arrParams);
-		if(!isset($arrParams['id'])) {
-			$arrParams['id'] = $this->getUniqueValue("user");
+		if(!isset($arrParams['_id'])) {
+			$arrParams['_id'] = $this->getUniqueValue("user");
 		} 
 		$arrParams['email'] = strtolower($email);
-		if( !isset($arrParams['name']) ) {
-			$arrParams['name'] = $arrParams['email'];
+		if( !isset($arrParams['nick']) ) {
+			$arrParams['nick'] = $arrParams['email'];
 		}
 		
 		if( !isset($arrParams['create_time']) ) {
@@ -84,6 +93,18 @@ class Model_Data_User extends Model_Data_MongoCollection {
 		$arrParams['last_login_time'] = $arrParams['create_time'];
 		if( !isset($arrParams['last_login_ip']) ) {
 			$arrParams['last_login_ip'] = Request::$client_ip;
+		}
+		if( !isset($arrParams['is_email_verified']) ) {
+			$arrParams['is_email_verified'] = 0;
+		}
+		if( !isset($arrParams['medal']) ) {
+			$arrParams['medal'] = array();
+		}
+		if( !isset($arrParams['tags']) ) {
+			$arrParams['tags'] = array();
+		}
+		if( !isset($arrParams['accept_subscribe_email']) ) {
+			$arrParams['accept_subscribe_email'] = 1;
 		}
 		
 		try {
@@ -96,7 +117,7 @@ class Model_Data_User extends Model_Data_MongoCollection {
 		}
 		JKit::$log->debug(__FUNCTION__." result-", $arrResult);
 		if($arrResult["ok"]==1) {
-			return $arrParams['id'];
+			return $arrParams['_id'];
 		}
 		
 		return false;
@@ -112,7 +133,7 @@ class Model_Data_User extends Model_Data_MongoCollection {
 			'email' => strtolower($email)
 		);
 		if ($excludeId!==NULL) {
-			$query['id'] = array('$ne'=>strval($excludeId));
+			$query['_id'] = array('$ne'=>intval($excludeId));
 		}
 		return $this->findOne($query);
 	}
@@ -124,10 +145,10 @@ class Model_Data_User extends Model_Data_MongoCollection {
 	 */
 	public function getByNick($nick, $excludeId=NULL) {
 		$query = array(
-			'name' => $nick
+			'nick' => $nick
 		);
 		if ($excludeId!==NULL) {
-			$query['id'] = array('$ne'=>strval($excludeId));
+			$query['_id'] = array('$ne'=>intval($excludeId));
 		}
 		return $this->findOne($query);
 	}
@@ -147,7 +168,7 @@ class Model_Data_User extends Model_Data_MongoCollection {
 			$arrParams['update_time'] = new MongoDate();	
 		}
 		
-		$query = array('id' => strval($uid) );
+		$query = array("_id" => intval($uid) );
 		try {
 			$arrResult = $this->getCollection()->update($query, array('$set'=>$arrParams), array("safe"=>true));
 		} catch (MongoCursorException $e) {
@@ -173,10 +194,92 @@ class Model_Data_User extends Model_Data_MongoCollection {
 	 * @return int;
 	 */
 	public function getUniqueValue($collectionName, $step=1) {
-		return md5($collectionName.microtime(true));
 		$strCode = $this->getUniqueCode($collectionName, $step);
 		$arrReturn =  Database::instance("web_mongo")->getMongoDB('video_search')->execute($strCode);
 		
 		return $arrReturn['retval'];
 	}
+	
+	/**
+	 * 
+	 * Enter description here ...
+	 * @param string $fileName 图片路径
+	 * 
+	 * @return boolean|array(
+	 * 	'group_name' => 组名,
+	 * 	'filename' =>图片存储相对路径
+	 * )
+	 */
+	public static function uploadAvatar($fileName, $ext=NULL) {
+		JKit::$log->debug(__FUNCTION__." file-{$fileName}");
+		$fdfs = new FastDFS(FASTDFS_CLUSTER_USER_AVATAR);
+		$ret = $fdfs->storage_upload_by_filename($fileName, $ext);
+		JKit::$log->debug(__FUNCTION__." errno-".$fdfs->get_last_error_no().", msg-".$fdfs->get_last_error_info().", ret-", $ret);
+		return $ret;
+	}
+	/**
+	 * 
+	 * 删除头像
+	 * @param string $groupName
+	 * @param string $fileName
+	 * 
+	 * @return boolean
+	 */
+	public static function removeAvatar($groupName, $fileName) {
+		JKit::$log->debug(__FUNCTION__." group-{$groupName}, file-{$fileName}");
+		$fdfs = new FastDFS(FASTDFS_CLUSTER_USER_AVATAR);
+		$ret = $fdfs->storage_delete_file($groupName, $fileName);
+		JKit::$log->debug(__FUNCTION__." errno-".$fdfs->get_last_error_no().", msg-".$fdfs->get_last_error_info().", ret-".$ret);
+		return $ret;
+	}
+    
+	/**
+	 * 颁发勋章
+	 * @param int $userId
+	 * @param string|array $medal 可以一次颁发多个，勋章定义见Model_Data_User里的勋章常量
+	 * @return bool
+	 */
+    public function awardMedal($userId, $medal)
+    {
+        return $this->addToSet(array('_id' => $userId), 'medal', $medal);
+    }
+    
+	/**
+	 * 取消勋章
+	 * @param int $userId
+	 * @param string|array $medal 可以一次取消多个
+	 * @return bool
+	 */
+    public function unawardMedal($userId, $medal)
+    {
+        return $this->removeFromSet(array('_id' => $userId), 'medal', $medal);
+    }
+    
+	/**
+	 * 用户是否拥有某个勋章
+	 * @param int $userId
+	 * @param string $medal
+	 * @return bool
+	 */
+    public function isAwardedMedal($userId, $medal)
+    {
+        return $this->count(array('_id' => $userId, 'medal' => $medal)) > 0;
+    }
+    
+	/**
+	 * 用户拥有的所有勋章
+	 * @param int $userId
+	 * @return array
+	 */
+    public function medals($userId)
+    {
+        $docs = $this->find(array('_id' => $userId), array('medal'));
+        if ($docs) {
+            $doc = current($docs);
+            return isset($doc['medal']) ? $doc['medal'] : array();
+        } else {
+            return array();
+        }
+    }
+    
 }
