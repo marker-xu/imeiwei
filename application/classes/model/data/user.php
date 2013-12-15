@@ -12,7 +12,7 @@ class Model_Data_User extends Model_Data_MongoCollection
     
 	public function __construct()
 	{
-        parent::__construct('web_mongo', 'video_search', 'user');
+        parent::__construct('user');
 	}
 
 	/**
@@ -178,27 +178,6 @@ class Model_Data_User extends Model_Data_MongoCollection
 		return isset($arrResult["ok"]) && $arrResult["ok"]==1 ? true : false;
 	}
 	
-	private function getUniqueCode($collectionName, $step=1) {
-		$strCode = 'db.unique_coll.findAndModify({query:{name:"'.$collectionName.
-		'"}, update:{$inc:{max:'.intval($step).'}}, new:true, upsert:1}).max';
-		
-		return $strCode;
-	}
-	
-	/**
-	 * 
-	 * Enter description here ...
-	 * @param string $collectionName
-	 * @param int $step
-	 * 
-	 * @return int;
-	 */
-	public function getUniqueValue($collectionName, $step=1) {
-		$strCode = $this->getUniqueCode($collectionName, $step);
-		$arrReturn =  Database::instance("web_mongo")->getMongoDB('video_search')->execute($strCode);
-		
-		return $arrReturn['retval'];
-	}
 	
 	/**
 	 * 

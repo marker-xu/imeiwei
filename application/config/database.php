@@ -28,12 +28,12 @@ return array
 		'caching'      => FALSE,
 		'profiling'    => TRUE,
 	),
-	// 视频MongoDB集群
-	'cloudsearch' => array(
+	// MongoDB集群
+	'web_mongo' => array(
 		'type'       => 'mongo',
 		'connection' => array(
     	    'dsn'        => array(
-    	    	'mongodb://127.0.0.1:30000', 
+    	    	'mongodb://127.0.0.1:27017', 
             ),
 			'timeout'    => 1000,
 	    ),

@@ -33,7 +33,7 @@ class Model_Data_UserConnect extends Model_Data_MongoCollection
 	
 	public function __construct()
 	{
-        parent::__construct('web_mongo', 'video_search', 'user_connect');
+        parent::__construct('user_connect');
 	}
 	
 	public function get($id)

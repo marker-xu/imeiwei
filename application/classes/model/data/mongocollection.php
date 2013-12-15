@@ -1,4 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+if( !defined("MONGO_CONFIG_NAME") ) {
+    define("MONGO_CONFIG_NAME", "web_mongo");
+}
+if( !defined("MONGO_DB_NAME") ) {
+    define("MONGO_DB_NAME", "common");
+}
 /**
  * MongoDB Collection
  */
@@ -8,9 +14,15 @@ class Model_Data_MongoCollection extends Model_Data_MongoDB
     protected $_cursorTimeout;
     private $_collection;
     
-    public function __construct($name, $db, $collection, $slaveOkay = true, 
+    public function __construct($collection, $db=NULL, $name=NULL , $slaveOkay = true, 
         $cursorTimeout = 5000)
     {
+        if($name===NULL) {
+            $name = MONGO_CONFIG_NAME;
+        }
+        if($db===NULL) {
+            $db = MONGO_DB_NAME;
+        }
         parent::__construct($name, $db, $slaveOkay);
         
         $this->_collectionName = $collection;
@@ -402,7 +414,7 @@ class Model_Data_MongoCollection extends Model_Data_MongoDB
 	 */
 	public function getUniqueValue($collectionName, $step=1) {
 		$strCode = $this->getUniqueCode($collectionName, $step);
-		$arrReturn =  Database::instance("cloudsearch")->getMongoDB('ku6search')->execute($strCode);
+		$arrReturn =  Database::instance("web_mongo")->getMongoDB('imeiwei')->execute($strCode);
 		
 		return $arrReturn['retval'];
 	}
