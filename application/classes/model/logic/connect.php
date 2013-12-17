@@ -4,7 +4,7 @@
  * 第三方登录和绑定
  * @author xucongbin zhangjianbin
  */
-class Model_Logic_Connect2 extends Model {
+class Model_Logic_Connect extends Model {
 	
 	private $objModelConnect;
 	

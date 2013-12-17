@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title><%block name="title"%>-MMSHOW<%/block%></title> 
+    <title><%block name="title"%>-爱美味<%/block%></title> 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>    
 	<%block name="custom_css"%>
 	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/common.css?v=<%#v#%>">

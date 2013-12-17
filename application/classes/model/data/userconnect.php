@@ -210,8 +210,8 @@ class Model_Data_UserConnect extends Model_Data_MongoCollection
 	public function getConnectByUid($type, $uid) {
 		JKit::$log->debug(__FUNCTION__." type-{$type}, uid-{$uid}");
 		$query = array(
-			"third_party" => $type,
 			"user_id" => $uid, 
+		    "third_party" => $type,
 		 );
 		 JKit::$log->debug(__FUNCTION__." result-", $this->find($query));
 		 $ret = $this->find($query);
