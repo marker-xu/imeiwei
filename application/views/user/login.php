@@ -12,8 +12,8 @@
 <%block name="bd"%>
 <div id="bd">
 <h3>How do you see?</h3>
-<div class="width:166px;">
-<a href="javascript:void(0);"  class="btn btn_login" ></a>您还没有登录，
+<div style="width:186px;">
+<a href="javascript:void(0);"  class="btn_login btn " ></a>您还没有登录，
 </div>
 </div>
 <%/block%>
