@@ -6,9 +6,6 @@
  */
 class Controller_User extends Controller 
 {
-    const USER_FEED_PAGE_COUNT = 20; //动态汇总和我的动态的每页条数
-    const FOLLOW_PAGE_COUNT = 28; //关注页面的每页条数
-    const FANS_PAGE_COUNT = 28; //关注页面的每页条数
     //用户TAG最大数量
     const USER_TAG_MAX_LIMIT = 20;
 	private $objLogicUser;
@@ -364,55 +361,7 @@ class Controller_User extends Controller
 		    }
 		    return;
 		}
-		
-		$sessionSdid = Session::instance()->get('sdid');
-		$ticket = $this->request->query("ticket");
-		$authKey = $this->request->query("authKey");
-		if($ticket) {
-			if($authKey) {
-				$gotoUrl = "/user/login".URL::query(array('f'=>$strTargetUrl, 'ticket'=>$ticket), false);
-				$strJs = "<script>window.parent.location.href='$gotoUrl';</script>";
-				die($strJs);
-			}
-			$arrSndaInfo = Model_Data_Sndauser::getTicketInfo($ticket);
-			if($arrSndaInfo) {
-				$intSdid = intval($arrSndaInfo['sdid']);
-				$arrUserInfo = $this->objLogicUser->getUserByid($intSdid);
-				if($sessionSdid && $sessionSdid==$intSdid) {
-					$this->gotoRefer("user/completeinfo?f=".urlencode($strTargetUrl), true, !$isMiddle);
-//					$this->request->redirect("user/completeinfo?f=".urlencode($strTargetUrl));
-				}
-				Session::instance()->set('sdid', $intSdid);				
-				#TODO 第三方帐号
-				if($arrUserInfo) {
-					$this->objLogicUser->login($intSdid);
-					//记录日志了
-					$modelStat = new Model_Data_Stat();
-	    			$arrStat = array(
-	    				'page_id'=>'click_login_success',
-	    				'user_id' => $intSdid,
-	    			);
-	    		    $modelStat->log($arrStat);
-	    		    if($strTargetUrl=="/") {
-	    		        $strTargetUrl = Util::userUrl($intSdid);
-	    		    }
-	    		    #TODO 改成js页内跳转
-	    		    $this->gotoRefer($strTargetUrl, false, !$isMiddle);
-				} else {
-					$this->gotoRefer("user/completeinfo?f=".urlencode($strTargetUrl), true, !$isMiddle);
-//					$this->request->redirect("user/completeinfo?f=".urlencode($strTargetUrl));
-				}
-			} else {
-				if($sessionSdid) {
-					$this->gotoRefer("user/completeinfo?f=".urlencode($strTargetUrl), true, !$isMiddle);
-				}
-				$this->err(null, "登录失败，请重试！");
-			}
-		}
-		if($sessionSdid) {
-			$this->request->redirect("user/register");
-		}
-		$loginUrl = Model_Data_Sndauser::buildLoginUrl(NULL, true);
+		$loginUrl = URL::site("connect/index?type=".Model_Data_UserConnect::TYPE_QQ, null, false);
 		$this->template->set("login_url", $loginUrl);
 //		$this->request->redirect($loginUrl);
 	}
@@ -420,11 +369,6 @@ class Controller_User extends Controller
 	public function action_completeinfo() {
 		if($this->_uid) {
 			$this->request->redirect('user/index');
-			return;
-		}
- 		$sdid = Session::instance()->get('sdid');
-		if(!$sdid) {
-			$this->request->redirect('index');
 			return;
 		}
 		

@@ -534,7 +534,6 @@ class Model_Logic_Connect extends Model {
 	public function login($connectType, $bindUser, $accessToken){
 		JKit::$log->debug(__FUNCTION__." connectType-{$connectType}, bindUser-{$bindUser['id']}, accessToken-", 
 			$accessToken);
-		$objModelSndareg = new Model_Data_Sndareg();
 		$arrReturn = array(
 			'uid'=>null,
 			'isfirstLogin'=>false,
@@ -551,54 +550,21 @@ class Model_Logic_Connect extends Model {
             
             if($arrUserInfo) {
 				$this->objLogicUser->login($intSdid);
-				//记录日志了
-				$modelStat = new Model_Data_Stat();
-    			$arrStat = array(
-    				'page_id'=>'click_login_success',
-    				'user_id' => $intSdid,
-    			);
-    		    $modelStat->log($arrStat);
-			}else{
-				$arrReturn['isfirstLogin'] = true;
-				Session::instance()->set('sdid', $intSdid);
-				Session::instance()->set('avatar', $bindUser['avatar']);
 			}
             $arrReturn['uid'] = $intSdid;
             
         } else {
+            
         	//创建帐号
-        	switch ($connectType){
-        		case Model_Data_UserConnect::TYPE_TQQ :
-        			$CompanyId = Model_Data_Sndareg::C_ID_TQQ;
-        			break;
-        		case Model_Data_UserConnect::TYPE_SINA :
-        			$CompanyId = Model_Data_Sndareg::C_ID_XL;
-        			break;
-        		case Model_Data_UserConnect::TYPE_RENREN :
-        			$CompanyId = Model_Data_Sndareg::C_ID_RR;
-        			break;
-        		case Model_Data_UserConnect::TYPE_DOUBAN :
-        			$CompanyId = Model_Data_Sndareg::C_ID_DB;
-        			break;
-        		case Model_Data_UserConnect::TYPE_QQ :
-        			$CompanyId = Model_Data_Sndareg::C_ID_QQ;
-        			break;
-        	}
         	$sndaParam = array(
         		'AccountId'=>$bindUser["id"],
-        		'CompanyId'=>$CompanyId,
+        		'CompanyId'=>$connectType,
         	);
+        	$strNick = $connectType."_".$bindUser["id"];
         	//盛大第三方帐号自动创建
-        	try {
-        		$sndaUserData = $objModelSndareg->AutoBindThirdAccountLogin($sndaParam);
-        	} catch (MongoException $e) {
-				JKit::$log->warn("AutoBindThirdAccountLogin rpc failure, code-".$e->getCode(). 
-				", msg-".$e->getMessage().", param-", $sndaParam);
-				return false;
-			}
-        	if($sndaUserData['return_code']==0){
-				$intSdid = (int)$sndaUserData['data']['SndaId'];
-				Session::instance()->set('sdid', $intSdid);
+        	$intSdid = $this->objLogicUser->register("", $bindUser["id"], $strNick, array());
+        	if($intSdid){
+        	    //绑定头像
 				if(isset($bindUser['avatar'])) {
 					Session::instance()->set('avatar', $bindUser['avatar']);
 				}
@@ -614,8 +580,7 @@ class Model_Logic_Connect extends Model {
 	        	$arrReturn['isfirstLogin'] = true;
 	        	$arrReturn['uid'] = $intSdid;
         	}else{
-        		Util::sendSmsMonitor("AutoBindThirdAccountLogin failure, ret-". json_encode( $sndaUserData) );
-        		JKit::$log->warn("AutoBindThirdAccountLogin response failure, ret-", $sndaUserData);
+        		JKit::$log->warn("AutoBindThirdAccountLogin response failure, ret-", $intSdid);
 				return false;
         	}
         }

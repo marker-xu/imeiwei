@@ -10,7 +10,7 @@ class Controller_Connect extends Controller
 	protected $_config 		= NULL;
 	protected $_douban  	= NULL;
 	
-	private $objModelLogicConnect2;
+	private $objModelLogicConnect;
 	
 	public function before()
 	{
@@ -18,7 +18,7 @@ class Controller_Connect extends Controller
 		// base url
 		$strHost = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DOMAIN_SITE;
 		$this->_base = "http://".$strHost."/connect";
-		$this->objModelLogicConnect2 = new Model_Logic_Connect();
+		$this->objModelLogicConnect = new Model_Logic_Connect();
 		//$this->_base = "http://www.quanloo.com/connect";
 	}
 	
@@ -29,19 +29,19 @@ class Controller_Connect extends Controller
 		switch($type)
 		{
 			case Model_Data_UserConnect::TYPE_DOUBAN :
-				$url = $this->objModelLogicConnect2->getDoubanRedirectUrl($strCallBackUrl);
+				$url = $this->objModelLogicConnect->getDoubanRedirectUrl($strCallBackUrl);
 				break;
 			case Model_Data_UserConnect::TYPE_SINA :
-				$url = $this->objModelLogicConnect2->getSinaRedirectUrl($strCallBackUrl);
+				$url = $this->objModelLogicConnect->getSinaRedirectUrl($strCallBackUrl);
 				break;
 			case Model_Data_UserConnect::TYPE_TQQ :
-				$url = $this->objModelLogicConnect2->getTqqRedirectUrl($strCallBackUrl);
+				$url = $this->objModelLogicConnect->getTqqRedirectUrl($strCallBackUrl);
 				break;
 			case Model_Data_UserConnect::TYPE_RENREN :
-				$url = $this->objModelLogicConnect2->getRenrenRedirectUrl($strCallBackUrl);
+				$url = $this->objModelLogicConnect->getRenrenRedirectUrl($strCallBackUrl);
 				break;
 			case Model_Data_UserConnect::TYPE_QQ :
-				$url = $this->objModelLogicConnect2->getQqRedirectUrl($strCallBackUrl);
+				$url = $this->objModelLogicConnect->getQqRedirectUrl($strCallBackUrl);
 				break;
 			default:
 				break;
@@ -63,19 +63,19 @@ class Controller_Connect extends Controller
 		switch($type)
 		{
 			case Model_Data_UserConnect::TYPE_DOUBAN :
-				$ret = $this->objModelLogicConnect2->doubanCallback();
+				$ret = $this->objModelLogicConnect->doubanCallback();
 				break;
 			case Model_Data_UserConnect::TYPE_SINA:
-				$ret = $this->objModelLogicConnect2->sinaCallback($code,$redirect_uri);
+				$ret = $this->objModelLogicConnect->sinaCallback($code,$redirect_uri);
 				break;
 			case Model_Data_UserConnect::TYPE_TQQ :
-				$ret = $this->objModelLogicConnect2->tqqCallback($oauth_verifier);
+				$ret = $this->objModelLogicConnect->tqqCallback($oauth_verifier);
 				break;
 			case Model_Data_UserConnect::TYPE_RENREN :
-				$ret = $this->objModelLogicConnect2->renrenCallback($code,$redirect_uri);
+				$ret = $this->objModelLogicConnect->renrenCallback($code,$redirect_uri);
 				break;
 			case Model_Data_UserConnect::TYPE_QQ :
-				$ret = $this->objModelLogicConnect2->qqCallback($code,$redirect_uri);
+				$ret = $this->objModelLogicConnect->qqCallback($code,$redirect_uri);
 				break;
 			default:
 				$this->err();
@@ -99,7 +99,7 @@ class Controller_Connect extends Controller
 		
 		if ( !$this->_uid || !$this->_user) {
 			//未登陆状态，执行登录操作
-			$ret = $this->objModelLogicConnect2->login($connectType, $bindUser, $accessToken);
+			$ret = $this->objModelLogicConnect->login($connectType, $bindUser, $accessToken);
 			if(!$ret){
 				//盛大创建帐号失败
 				//exit('login failure!');
@@ -118,7 +118,7 @@ class Controller_Connect extends Controller
 		}else{
 			//登陆状态，执行绑定操作
 			$uid = $this->_uid;
-			$bindRet = $this->objModelLogicConnect2->bind($uid, $connectType, $bindUser, $accessToken);
+			$bindRet = $this->objModelLogicConnect->bind($uid, $connectType, $bindUser, $accessToken);
 			JKit::$log->debug(__FUNCTION__." bind uid-{$uid},connect_type-{$connectType},connect_id-{$bindUser['id']},token-", $accessToken);
 			
 			if($bindRet){
@@ -137,7 +137,7 @@ class Controller_Connect extends Controller
 		$uid = (int) $this->_uid;
 		$type = (int) $this->request->param('type');
 		
-		$ret = $this->objModelLogicConnect2->unBind($type, $uid);
+		$ret = $this->objModelLogicConnect->unBind($type, $uid);
 		
 		//删除SESSION
 		switch($type)
@@ -186,7 +186,7 @@ class Controller_Connect extends Controller
 		$vid =  $this->request->param('vid');
 		$cid = (int) $this->request->param('cid');
 		
-		$connectInfo = $this->objModelLogicConnect2->getBindList($uid);
+		$connectInfo = $this->objModelLogicConnect->getBindList($uid);
 		$objTpl = self::template();
 		if($cid)
 		{
@@ -262,20 +262,20 @@ class Controller_Connect extends Controller
 		$sinaShare = false;
 		foreach($type as $k=>$v)
 		{
-			$connect = $this->objModelLogicConnect2->getBindList($uid);
+			$connect = $this->objModelLogicConnect->getBindList($uid);
 			JKit::$log->debug('connect-',$connect);
 			
 			if($v == Model_Data_UserConnect::TYPE_TQQ) {
 				$arrAccessTokenTmp = $connect['tqq']['access_token'];
 				$access_token = isset( $arrAccessTokenTmp['access_toekn'] ) ? $arrAccessTokenTmp['access_toekn'] : 
 					$arrAccessTokenTmp['access_token'];
-				$tqqshare = $this->objModelLogicConnect2->tqqShare($param, $access_token, $arrAccessTokenTmp['oauth_token_secret']);
+				$tqqshare = $this->objModelLogicConnect->tqqShare($param, $access_token, $arrAccessTokenTmp['oauth_token_secret']);
 			}
 			if($v == Model_Data_UserConnect::TYPE_SINA) {
 				$arrAccessTokenTmp = $connect['sina']['access_token'];
 				$access_token = isset( $arrAccessTokenTmp['access_toekn'] ) ? $arrAccessTokenTmp['access_toekn'] : 
 					$arrAccessTokenTmp['access_token'];
-				$sinaShare = $this->objModelLogicConnect2->sinaShare($param, $access_token);
+				$sinaShare = $this->objModelLogicConnect->sinaShare($param, $access_token);
 			}
 		}
 		if( !$tqqshare && !$sinaShare ) {

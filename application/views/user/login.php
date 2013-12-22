@@ -19,5 +19,14 @@
 <%/block%>
 
 <%block name="foot_js"%>
+<script type="text/javascript">
+var login_url = "<%$login_url%>";     
+	$(document).ready(function(){
+		$(".btn_login").click(function(){
+			var oauth_login_window = window.open(url, "oauth_login_window", "width=700,height=600,toolbar=yes,menubar=yes,resizable=yes,status=yes");
 
+		    oauth_login_window.focus();
+		});
+	});
+</script>
 <%/block%>
