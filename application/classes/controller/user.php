@@ -367,15 +367,6 @@ class Controller_User extends Controller
 	}
 	
 	public function action_completeinfo() {
-		if($this->_uid) {
-			$this->request->redirect('user/index');
-			return;
-		}
-		
-		if( $this->objLogicUser->getUserByid($sdid) ) {
-			$this->objLogicUser->login($sdid);
-			$this->request->redirect('user/index');
-		}
 		
 		$arrRules = $this->_formRule(array('@name', '@intro', '@email'));
 		if($this->request->method() != HTTP_Request::POST) {
@@ -405,17 +396,6 @@ class Controller_User extends Controller
 		    return;
 		}
 		
-		$objBlackword = Model_Logic_Blackword::instance();
-		if ($objBlackword->filter($arrPost['name'])) {
-			$this->err(null, array('name'=>"内容包含敏感词"), null, null, "usr.submit.valid");
-		}
-		if ( $objBlackword->filter($arrPost['intro']) ) {
-		    $this->err(null, array('intro'=>"内容包含敏感词"), null, null, "usr.submit.valid");
-		}
-		if ($objBlackword->filter($arrPost['tags'])) {
-			$this->err(null, array('input_tag'=>"内容包含敏感词"), null, null, "usr.submit.valid");
-		}
-		
 		$arrPost = array_map('trim', $arrPost);
 		$arrTags = $this->filterTags( explode(",", $arrPost['tags']) );
 		if( count($arrTags)>self::USER_TAG_MAX_LIMIT ) {
@@ -440,12 +420,6 @@ class Controller_User extends Controller
 			if($uid) {
 		        #TODO 验证邮箱
 				#TODO 第三方帐号
-		        $modelStat = new Model_Data_Stat();
-    			$arrStat = array(
-    				'page_id'=>'click_register',
-    				'user_id' => $uid,
-    			);
-    		    $modelStat->log($arrStat);
 //		        $strTargetUrl = "user/selectcircles?step=2&f=".urlencode(preg_replace('/^\//', '', $strTargetUrl));
 				#TODO第三方帐号，头像替换为围脖帐号图片
 				$avatar = Session::instance()->get('avatar');
