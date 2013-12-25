@@ -28,8 +28,8 @@ return array
 	),
 	'qq' => array(
 		'app' => array(
-			'id'    => "100287552",
-			'secret' => "aca4e4fe2028bad5819aaae7df4ae11d",
+			'id'    => "100585481",
+			'secret' => "2c1f4dda1d37bee8ee7fdd0cb7d97d66",
 		)
 	),	
 	
