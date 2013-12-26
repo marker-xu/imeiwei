@@ -37,8 +37,6 @@ class Controller_User extends Controller
 	{
 	    $uid = (int) $this->request->param("id");
 	    if (! $uid || $this->_uid == $uid) {
-	        $this->template()->set_filename("user/feeds");
-	        return $this->action_feeds();	        
 	    } else {
 	        $this->template()->set_filename("user/_other_people_feeds");
 	        return $this->_otherPeople();
@@ -381,7 +379,6 @@ class Controller_User extends Controller
 		    $this->template->set('nickname', $nickname);
 		    
 		    try {
-		    	$arrTmp = Model_Data_Sndauser::accountQueryUserInfo($sdid);
 		    	if (isset($arrTmp['Email']) && ! empty($arrTmp['Email'])) {
 		    		$this->template->set('email', trim($arrTmp['Email']));
 		    	}
