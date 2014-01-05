@@ -10,9 +10,12 @@
 <%block name="custom_js"%>
 <%/block%>
 <%block name="bd"%>
-<div id="bd">
-<h1>This is a sample view.</h1>
-<div>Hello World!</div>
+<div id="bd" >
+<h1>欢迎来到爱美味.</h1>
+<div style="width:100%;
+	background: 0;
+filter: none;
+	background-image:url(/resource/images/meizi.jpg);min-height:500px;"></div>
 </div>
 <%/block%>
 
