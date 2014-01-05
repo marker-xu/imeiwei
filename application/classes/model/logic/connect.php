@@ -560,15 +560,25 @@ class Model_Logic_Connect extends Model {
         		'AccountId'=>$bindUser["id"],
         		'CompanyId'=>$connectType,
         	);
-        	$strNick = $connectType."_".$bindUser["id"];
+        	$strNick = $bindUser["name"];
+        	$arrAvatar = array();
+        	if(isset($bindUser['avatar'])) {
+        	    $arrAvatar["org"] = $bindUser['avatar'];
+        	}
+        	try {
+        	    $intSdid = $this->objLogicUser->register("", $bindUser["id"], $strNick, $arrAvatar );
+        	} catch (Model_Logic_Exception $e) {
+        	    if( $e->getCode()==-2002 ) {
+        	        $strNick = $connectType."_".$bindUser["id"];
+        	        $intSdid = $this->objLogicUser->register("", $bindUser["id"], $strNick, $arrAvatar );
+        	    }
+        	}
         	//盛大第三方帐号自动创建
-        	$intSdid = $this->objLogicUser->register("", $bindUser["id"], $strNick, array());
         	if($intSdid){
         	    //绑定头像
 				if(isset($bindUser['avatar'])) {
 					Session::instance()->set('avatar', $bindUser['avatar']);
 				}
-				
         	
 	        	//创建登录连接
 	        	$c_type = Model_Data_UserConnect::CONNECT_TYPE_LOGIN; 
