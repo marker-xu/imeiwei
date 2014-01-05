@@ -61,11 +61,9 @@ class Controller_User extends Controller
 	 */
 	protected function _otherPeople() {
 	    $arrParam = $this->_user_common();
-	    $objFeed2 = new Model_Logic_Feed2();
 	    $intCount = self::USER_FEED_PAGE_COUNT;
 	    $intLasttime = time();
-	    $arrFeed = $objFeed2->getUserFeedList(array('user_id' => $arrParam['uid'], 'offset' => 0, 'count' => $intCount,
-	            'lasttime' => $intLasttime, 'no_reduce' => $arrParam['isAdmin'], 'type' => Model_Logic_Feed2::SUBTYPE_SELF));
+	    $arrFeed = array();
 	    $this->template->set('feeds', $arrFeed);
 	    $this->template->set('feeds_page_count', $intCount);
 	    $this->template->set('feeds_lasttime', $intLasttime);
@@ -1779,7 +1777,7 @@ class Controller_User extends Controller
 			'setting' => 1,
 			'modifyavatar' => 1,
 			'modifypassword' => 1,
-//			'logout' => 1,
+			'index' => 1,
 			'getcirclelist' =>1,
 			'check_password' => 1,
 			'invite' => 1,
