@@ -16,7 +16,8 @@ return array
 			array('host' => 'searchroot.sii.sdo.com', 'port' => 9090),
 		),		
 	),
-	'sjtu_api' => array(
+        //上铺接口
+	'shop_api' => array(
 		'type' => RPC_TYPE_HTTP,
 		'option' => array(
 			'balance' => 'Rpc_Balance_RoundRobin',
@@ -25,31 +26,59 @@ return array
 			'rtimeout' => 3000,
 		),
 		'server' => array(
-			array('host' => 'bbs.sjtu.edu.cn'),
+			array('host' => '127.0.0.1', 'port' => 8080),
 		),		
 	),
-	'fudan_api' => array(
-		'type' => RPC_TYPE_HTTP,
-		'option' => array(
-			'balance' => 'Rpc_Balance_RoundRobin',
-			'ctimeout' => 1000,
-			'wtimeout' => 2000,
-			'rtimeout' => 4000,
-		),
-		'server' => array(
-			array('host' => 'bbs.fudan.sh.cn'),
-		),		
-	),
-	'newsmth_api' => array(
-		'type' => RPC_TYPE_HTTP,
-		'option' => array(
-			'balance' => 'Rpc_Balance_RoundRobin',
-			'ctimeout' => 1000,
-			'wtimeout' => 2000,
-			'rtimeout' => 4000,
-		),
-		'server' => array(
-			array('host' => 'www.newsmth.net'),
-		),		
-	),
+        //提示接口
+        'sug_api' => array(
+                'type' => RPC_TYPE_HTTP,
+                'option' => array(
+                        'balance' => 'Rpc_Balance_RoundRobin',
+                        'ctimeout' => 1000,
+                        'wtimeout' => 2000,
+                        'rtimeout' => 3000,
+                ),
+                'server' => array(
+                        array('host' => '127.0.0.1', 'port' => 8080),
+                ),
+        ),
+        //用户相关接口
+        'user_api' => array(
+                'type' => RPC_TYPE_HTTP,
+                'option' => array(
+                        'balance' => 'Rpc_Balance_RoundRobin',
+                        'ctimeout' => 1000,
+                        'wtimeout' => 2000,
+                        'rtimeout' => 3000,
+                ),
+                'server' => array(
+                        array('host' => '127.0.0.1', 'port' => 8080),
+                ),
+        ),
+        //菜品接口
+        'dish_api' => array(
+                'type' => RPC_TYPE_HTTP,
+                'option' => array(
+                        'balance' => 'Rpc_Balance_RoundRobin',
+                        'ctimeout' => 1000,
+                        'wtimeout' => 2000,
+                        'rtimeout' => 3000,
+                ),
+                'server' => array(
+                        array('host' => '127.0.0.1', 'port' => 8080),
+                ),
+        ),
+        //订单接口
+        'order_api' => array(
+                'type' => RPC_TYPE_HTTP,
+                'option' => array(
+                        'balance' => 'Rpc_Balance_RoundRobin',
+                        'ctimeout' => 1000,
+                        'wtimeout' => 2000,
+                        'rtimeout' => 3000,
+                ),
+                'server' => array(
+                        array('host' => '127.0.0.1', 'port' => 8080),
+                ),
+        ),
 );
