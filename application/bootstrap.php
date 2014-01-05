@@ -148,6 +148,13 @@ JKit::$template_settings['cache_dir'] = APPPATH.'../_smarty/cache/';
 //JKit::$security['csrf'] = false;
 //JKit::$security['xss']  = false;
 JKit::$security['non-ajax access']  = true;
+//用户的route配置
+Route::set('user', 'user/(<id>(/<action>(/<type>)))', array('id' => '\d+', 'type' => '[\d\w-_]*'))
+->defaults(array(
+'controller' => 'user',
+'action'     => 'index',
+'route_name' => 'user_page',
+));
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
