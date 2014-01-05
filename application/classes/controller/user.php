@@ -541,10 +541,7 @@ class Controller_User extends Controller
 		}
 		$this->objLogicUser->logout($this->_uid);
 		
-		
-		$logoutUrl = Model_Data_Sndauser::buildLogoutUrl($redirectUrl);
-//		echo $logoutUrl;
-		$this->request->redirect($logoutUrl); //到首页
+		$this->request->redirect($strTargetUrl); //到首页
 	}
 	
 	/**
@@ -553,7 +550,7 @@ class Controller_User extends Controller
 	 */
 	public function action_changeaccount() {
 		$this->objLogicUser->logout($this->_uid);
-		$logoutUrl = Model_Data_Sndauser::buildLogoutUrl("http://".DOMAIN_SITE."/user/login");
+		$logoutUrl = "http://".DOMAIN_SITE."/user/login";
 		$this->request->redirect($logoutUrl); //到首页
 	}
 	/**
