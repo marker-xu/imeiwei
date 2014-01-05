@@ -19,7 +19,7 @@ class Controller_Connect extends Controller
 		$strHost = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : DOMAIN_SITE;
 		$this->_base = "http://".$strHost."/connect";
 		$this->objModelLogicConnect = new Model_Logic_Connect();
-		$this->_base = "http://www.aimeiwei.cc/www/connect";
+		$this->_base = "http://".DOMAIN_SITE."/connect";
 	}
 	
 	public function action_index(){

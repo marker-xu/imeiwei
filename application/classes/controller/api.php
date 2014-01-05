@@ -34,7 +34,7 @@ class Controller_Api extends Controller {
 //		$arrInfo['content'] = strip_tags(preg_replace("/<br[^>]*>/i", "\n", $arrInfo['content']));
 		
 		$arrInfo['content'] = strip_tags( preg_replace($arrPatterns, $arrReplace, $arrInfo['content']), "<img>" );
-		print_r()$arrInfo['content']);
+		print_r( $arrInfo['content'] );
 		$arrInfo['content'] = $this->rebuildContent($arrInfo['content'], $arrInfo['pic_list'], $strFrom);
 //		print_r($arrInfo);
 		$this->ok($arrInfo);
