@@ -24,7 +24,7 @@ class ModelDataRecommendTest extends UnitTestCase {
     	$intCount = 10;
     	$arr  = $this->_model->getShopList( $intOffset, $intCount );
     	print_r($arr);
-    	$this->assertIsA($arr);
+    	$this->assertIsA($arr, "array");
     }
     
     public function test_getInfo() {
@@ -32,7 +32,7 @@ class ModelDataRecommendTest extends UnitTestCase {
     	$intId = 12;
     	$arr  = $this->_model->getInfo($intId);
     	print_r($arr);
-    	$this->assertIsA($arr);
+    	$this->assertIsA($arr, "array");
     }
     
     public function test_getPromotion() {
@@ -40,7 +40,7 @@ class ModelDataRecommendTest extends UnitTestCase {
 		$intId = "10";
     	$arr  = $this->_model->getPromotion($intId);
     	print_r($arr);
-    	$this->assertIsA($arr);
+    	$this->assertIsA($arr, "array");
     }
     public function test_buildData() {
     	return;
