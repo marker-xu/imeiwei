@@ -19,7 +19,7 @@ class ModelDataRecommendTest extends UnitTestCase {
     }
     
     public function test_getShopList() {
-//     	return;
+    	return;
     	$intOffset = "10";
     	$intCount = 10;
     	$arr  = $this->_model->getShopList( $intOffset, $intCount );
@@ -28,7 +28,7 @@ class ModelDataRecommendTest extends UnitTestCase {
     }
     
     public function test_getInfo() {
-        return;
+//         return;
     	$intId = 12;
     	$arr  = $this->_model->getInfo($intId);
     	print_r($arr);
@@ -36,16 +36,20 @@ class ModelDataRecommendTest extends UnitTestCase {
     }
     
     public function test_getPromotion() {
-//     	return;
+    	return;
 		$intId = "10";
     	$arr  = $this->_model->getPromotion($intId);
     	print_r($arr);
     	$this->assertIsA($arr, "array");
     }
-    public function test_buildData() {
-    	return;
+    public function test_addShopPraise() {
+//     	return;
 
-
+    	$intId = "10";
+    	$intUid = 105;
+    	$arr  = $this->_model->addShopPraise($intId, $intUid, $strUserName);
+    	var_dump($arr);
+    	$this->assertTrue($arr);
     }
     
     public function test_buildUserCircleAndVideo() {

@@ -48,11 +48,11 @@ class Model_Data_Shop {
     }
     
     /**
-     * 店铺促销信息
+     * 赞扬店铺接口
      * @param int $intId
      * @return array
      */
-    public function addShopFavorite( $intId, $intUid=NULL, $strUserName=NULL ) {
+    public function addShopPraise( $intId, $intUid=NULL, $strUserName=NULL ) {
         $arrParams = array(
                 "type" => "insert",
                 "i_id" => $intId,
@@ -65,13 +65,72 @@ class Model_Data_Shop {
         }
         return $this->request($this->strBaseUrl, array("post_vars" => $arrParams) );
     }
+    /**
+     * 用户收藏店铺
+     * @param int $intUid
+     * @param int $intShopId
+     * @return Ambigous <boolean, multitype:, mixed>
+     */
+    public function addShopFavorite(  $intUid, $intShopId ) {
+        $arrParams = array(
+                "type" => "favo",
+                "i_shop_id" => $intShopId,
+                "i_user_id" => $intUid,
+                "op" => "favo"
+        );
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true );
+        
+        return isset($arrTmp["retcode"]) && $arrTmp["retcode"]===0;
+    }
+    /**
+     * 
+     * @param unknown $intUid
+     * @param unknown $intShopId
+     * @return Ambigous <boolean, multitype:, mixed>
+     */
+    public function removeShopFavorite(  $intUid, $intShopId ) {
+        $arrParams = array(
+                "type" => "favo",
+                "i_shop_id" => $intShopId,
+                "i_user_id" => $intUid,
+                "op" => "unfavo"
+        );
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true );
+        
+        return isset($arrTmp["retcode"]) && $arrTmp["retcode"]===0;
+    }
     
-    public function request( $mixedAction, $arrParams=array()) {
+    public function addShopInfo( $strShopName, $arrInfo ) {
+        $arrParams = $arrInfo;
+        $arrParams["type"] = "insert";
+        $arrParams["s_name"] = $strShopName;
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams) );
+        
+        return $arrTmp;
+    }
+    /**
+     * 更新商铺信息
+     * @param unknown $intId
+     * @param unknown $arrInfo
+     * @return boolean
+     */
+    public function updateShopInfo( $intId, $arrInfo ) {
+        $arrParams = $arrInfo;
+        $arrParams["type"] = "update";
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true );
+    
+        return isset($arrTmp["retcode"]) && $arrTmp["retcode"]===0;
+    }
+    
+    public function request( $mixedAction, $arrParams=array(), $returnedAll=false ) {
         $strContent = Rpc::call($this->strConfigName, $mixedAction, $arrParams );
         
         if( !$strContent || !($arrResult = json_decode( $strContent, true ) ) ) {
             JKit::$log->warn( "the backend failure, action-".$mixedAction.", ret-".$strContent.", params-", $arrParams );
             return false;
+        }
+        if( $returnedAll ) {
+            return $arrResult;
         }
         if( $arrResult["retcode"]!==0 ) {
             JKit::$log->warn( "the backend response failure, code-{$arrResult["retcode"]}, msg-{$arrResult["message"]}, action-" . 
