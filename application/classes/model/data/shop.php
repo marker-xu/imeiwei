@@ -63,7 +63,9 @@ class Model_Data_Shop {
         if( $strUserName ) {
             $arrParams["s_uname"] = $strUserName;
         }
-        return $this->request($this->strBaseUrl, array("post_vars" => $arrParams) );
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true );
+        
+        return isset($arrTmp["retcode"]) && $arrTmp["retcode"]===0;
     }
     /**
      * 用户收藏店铺
