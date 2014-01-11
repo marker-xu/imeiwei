@@ -5,7 +5,8 @@ class Controller_Welcome extends Controller {
 	public function action_index()
 	{
 		//$this->request->forward('guide');
-		$this->response->body('hello, world!');
+		$loginUrl = URL::site("connect/index?type=".Model_Data_UserConnect::TYPE_QQ, null, false);
+		$this->template->set("login_url", $loginUrl);
 	}
 	
 	public function action_sample()

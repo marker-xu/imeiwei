@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>    
 	<%block name="custom_css"%>
 	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/common.css?v=<%#v#%>">
+	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/reset.min.css?v=<%#v#%>">
 	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/js/third/bootstrap/css/bootstrap.css?v=<%#v#%>">
 	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/js/third/bootstrap/css/bootstrap-theme.css?v=<%#v#%>">
 	<%$smarty.block.child%>
