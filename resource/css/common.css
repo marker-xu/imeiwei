@@ -207,9 +207,9 @@ widget变绿模块
         position:relative;
         border: 0 none;
        
-        background:#006490;
-        margin:  20px 0 0 0;
-        padding: 20px 0;
+        background:#333;
+        margin:  10px 0 0 0;
+        padding: 5px 0;
         text-align: center;
         width: 100%;
         color:#fff;
@@ -221,39 +221,3 @@ widget变绿模块
         color: #fff;
         text-decoration: none;
     }
-table{
-	border: solid 1px #E4E4E4;
-display: table;
-border-collapse: separate;
-border-spacing: 2px;
-}
-th{
-line-height: 24px;
-border-bottom: solid 1px #C5C5C5;
-color: #000;
-background: #E2E4E6;
-background: -moz-linear-gradient(top, #F8F8F8 0%, #E2E4E6 100%);
-background: -webkit-gradient(linear, 0 0, 0 100%, from(#F8F8F8), to(#E2E4E6));
-background: -o-linear-gradient(top, #F8F8F8 0%, #E2E4E6 100%);
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f8f8', endColorstr='#e2e4e6');
--ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f8f8', endColorstr='#e2e4e6')";
-}
-td, th{padding-left: 8px;
-border-left: solid 1px #E4E4E4;
-border-top: solid 1px #E4E4E4;
-display: table-cell;
-}
-th{line-height: 24px;
-border-bottom: solid 1px #C5C5C5;
-color: #000;}
-td{height: 32px;
-vertical-align: middle;}
-
-.btn_login{float: right;
-width: 76px;
-height: 24px;
-border: 0;
-background: 0;
-filter: none;
-background-image: url(/resource/images/qq.png);
-background-position: -139px -29px;}
