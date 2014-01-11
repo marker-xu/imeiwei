@@ -9,7 +9,7 @@
     <title><%block name="title"%>-爱美味<%/block%></title> 
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>    
 	<%block name="custom_css"%>
-	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/reset.min.css?v=<%#v#%>">
+	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/common.css?v=<%#v#%>">
 	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/js/third/bootstrap/css/bootstrap.css?v=<%#v#%>">
 	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/js/third/bootstrap/css/bootstrap-theme.css?v=<%#v#%>">
 	<%$smarty.block.child%>
@@ -22,14 +22,16 @@
 </head>
 <%/strip%>
 <body>
-    <%block name="hd"%>
-        <%include file="common/header.tpl"%>
-    <%/block%>
-    <%block name="bd"%>
-    <%/block%>
-    <%block name="ft"%>
-        <%include file="common/footer.tpl"%>
-    <%/block%>
+    <div id="<%block name="doc"%>doc1<%/block%>">
+        <%block name="hd"%>
+            <%include file="common/header.tpl"%>
+        <%/block%>
+        <%block name="bd"%>
+        <%/block%>
+        <%block name="ft"%>
+            <%include file="common/footer.tpl"%>
+        <%/block%>
+    </div>
     <%block name="foot_html"%>
     <%/block%>
 

@@ -1,3 +1,9 @@
-<div id="header">
-    <div class="box"><div class="logoer">爱美味</div></div>
+<div id="hd">
+    <div class="wrap">
+        <div class="content">
+            <div id="logo">
+                <span style="color:#fff;font-weight:700;font-size:30px;">爱美味</span>
+            </div>
+        </div>
+    </div>
 </div>
