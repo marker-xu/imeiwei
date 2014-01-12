@@ -12,6 +12,7 @@
 <%block name="custom_js"%>
 <script type="text/javascript" src="<%#resUrl#%>/js/admin/common/main-b.js?v=<%#v#%>"></script>
 <script type="text/javascript" src="<%#resUrl#%>/js/third/numkeybord/numkeybord.js?v=<%#v#%>"></script>
+<script type="text/javascript" src="<%#resUrl#%>/js/third/bootstrap/bootstrap.js"></script>
 <%/block%>
 <%block name="bd"%>
 <div id="main-body">
