@@ -14,7 +14,7 @@ $application = 'application';
  *
  * @see  http://kohanaframework.org/guide/about.install#modules
  */
-$modules = '/home/www/php5/lib/php-libs/jkit/modules';
+$modules = '/home/marker/php5/lib/php-libs/jkit/modules';
 
 /**
  * The directory in which the Kohana resources are located. The system
@@ -22,7 +22,7 @@ $modules = '/home/www/php5/lib/php-libs/jkit/modules';
  *
  * @see  http://kohanaframework.org/guide/about.install#system
  */
-$system = '/home/www/php5/lib/php-libs/jkit/system';
+$system = '/home/marker/php5/lib/php-libs/jkit/system';
 
 /**
  * The default extension of resource files. If you change this, all resources
@@ -73,7 +73,6 @@ if ( ! is_dir($system) AND is_dir(DOCROOT.$system))
 define('APPPATH', realpath($application).DIRECTORY_SEPARATOR);
 define('MODPATH', realpath($modules).DIRECTORY_SEPARATOR);
 define('SYSPATH', realpath($system).DIRECTORY_SEPARATOR);
-
 // Clean up the configuration vars
 unset($application, $modules, $system);
 

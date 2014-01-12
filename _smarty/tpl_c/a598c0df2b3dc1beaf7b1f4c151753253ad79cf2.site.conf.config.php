@@ -4,9 +4,9 @@
   ),
   'vars' => 
   array (
-    'siteUrl' => 'http://admin.example.com:9080',
-    'resUrl' => 'http://resource.example.com:9080',
-    'apiUrl' => 'http://admin.example.com:9080',
+    'siteUrl' => 'http://www.aimeiwei.cc',
+    'resUrl' => 'http://www.aimeiwei.cc/resource',
+    'apiUrl' => 'http://www.aimeiwei.cc',
     'v' => '1.0.5',
     'combo' => '',
   ),

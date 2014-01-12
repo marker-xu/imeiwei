@@ -155,6 +155,14 @@ Route::set('user', 'user/(<id>(/<action>(/<type>)))', array('id' => '\d+', 'type
 'action'     => 'index',
 'route_name' => 'user_page',
 ));
+Route::set('sections', '<directory>(/<controller>(/<action>(/<id>)))',
+    array(
+        'directory' => '(admin|affiliate)'
+    ))
+    ->defaults(array(
+        'controller' => 'shop',
+        'action'     => 'index',
+    ));
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.

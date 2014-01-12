@@ -11,13 +11,10 @@
 	<%block name="custom_css"%>
 	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/common.css?v=<%#v#%>">
 	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/reset.min.css?v=<%#v#%>">
-	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/js/third/bootstrap/css/bootstrap.css?v=<%#v#%>">
-	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/js/third/bootstrap/css/bootstrap-theme.css?v=<%#v#%>">
 	<%$smarty.block.child%>
 	<%/block%>
 	<%block name="custom_js"%>
 	<script type="text/javascript" src="<%#resUrl#%>/js/third/jquery-1.7.2.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/js/third/bootstrap/bootstrap.min.js?v=<%#v#%>">
 	<%$smarty.block.child%>
 	<%/block%>
 </head>
