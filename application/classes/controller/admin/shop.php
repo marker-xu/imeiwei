@@ -16,4 +16,6 @@ class Controller_Admin_Shop extends Controller {
 	public function action_environment() {
 	}
 
+	public function action_env_add() {
+	}
 } // End Welcome
