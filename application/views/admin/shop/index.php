@@ -17,32 +17,10 @@
 <%block name="bd"%>
 <div id="main-body">
 	<div class="center float_box">
-		<div class="navgations">
-			<div class="head-pic">
-				<div class="pic">
-					<img src="<%#resUrl#%>/css/img/headphoto.jpg?v=<%#v#%>" class="head" />
-				</div>
-			</div>
-			<%include file="inc/left.inc"%>
-		</div>
+		<%include file="inc/admin/left.inc"%>
 		<div class="contents">
 			
-			
-			<div id="store-info-header">
-				<div class="lefter">
-					<h3 class="float_box"><span class="name">家乡人猫肉馆</span><span class="staic">正常营业</span></h3>
-					<ul class="star-ul">
-						<li class="all-star"></li>
-						<li class="all-star"></li>
-						<li class="all-star"></li>
-						<li class="all-star"></li>
-						<li class="half-star"></li>
-					</ul>
-				</div>
-				<div class="righter">
-					<div class="now-time">2013年12月12号 11:30</div>
-				</div>
-			</div>
+			<%include file="inc/admin/shop_header.inc"%>
 			<div id="base-info">
 				<h4>基本信息</h4>
 				<div class="form-body">
