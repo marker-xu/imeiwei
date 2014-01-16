@@ -21,6 +21,7 @@
 			
 			<div id="base-info">
 				<h4 class="tit2">就餐环境</h4>
+				<a href="/admin/shop/env_add" style="float: right;">上传新图</a>
 				<div class="form-body">
 					<ul class="shop-photo float_box">
 						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
