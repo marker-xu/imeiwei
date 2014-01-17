@@ -3,13 +3,12 @@
 class Controller_Admin_Api extends Controller {
 	
 	public function action_get_region_async() {
-	    $province = $this->request->param("province");
+	    $province = $this->request->param("province", "北京");
 	    $all = $this->request->param("all");
 	    $path = DOCROOT . 'resource/js/third/region/region.json';
 	    $provinces = json_decode(file_get_contents($path), true);
 	    
 	    $result = array();
-	    
 	    // 如果all==1，返回该省的四级以内的地址和其他省的一级地址，否则直接返回该省的信息
 	    if($all == '1') {
 	        foreach($provinces as $key => $item) {
@@ -29,6 +28,11 @@ class Controller_Admin_Api extends Controller {
 	                $result = $item;
 	                break;
 	            }
+	        }
+	    }
+	    if(!$province) {
+	        foreach($provinces as $key => $item) {
+	                $result[] = $item[0];
 	        }
 	    }
 	    $this->ok( $result );
