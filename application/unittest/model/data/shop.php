@@ -52,7 +52,7 @@ class ModelDataRecommendTest extends UnitTestCase {
     	$this->assertTrue($arr);
     }
     
-    public function test_buildUserCircleAndVideo() {
+    public function test_addShopFavorite() {
     	return;
     }
     
