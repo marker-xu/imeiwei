@@ -4,6 +4,7 @@ class Controller_Admin_Api extends Controller {
 	
 	public function action_get_region_async() {
 	    $province = $this->request->param("province");
+	    $all = $this->request->param("all");
 	    $path = DOCROOT . 'resource/js/third/region/region.json';
 	    $provinces = json_decode(file_get_contents($path), true);
 	    
