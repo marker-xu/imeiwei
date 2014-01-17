@@ -108,11 +108,11 @@ class Controller_Connect extends Controller
 			if($ret['isfirstLogin']){
 				//第一次登录，补全个人信息注册圈乐帐号
 				Session::instance()->set('nickname',$bindUser['name']);
-				$this->redirect(Util::userUrl("admin/shop"));
+				$this->redirect("/admin"));
 // 				$this->redirect("/user/completeinfo?f=".urlencode($strTargetUrl));
 			}else{
 				//非第一次登录，跳到登录后的个人页
-				$this->redirect(Util::userUrl("admin/shop"));
+				$this->redirect("/admin");
 // 				$this->reload();
 			}
 		}else{
