@@ -44,4 +44,17 @@ class Controller_Admin_Api extends Controller {
 	        $this->err(null, "the dstrict not exists");
 	    }
 	}
+	
+	/**
+	 * 缩短省份显示在滚轮中的名称
+	 */
+	private function reduceProvinceName($provinceName) {
+	    $length = 2;
+	    if ($provinceName === '黑龙江' ||
+	    $provinceName === '内蒙古' ||
+	    $provinceName === '钓鱼岛') {
+	        $length = 3;
+	    }
+	    return mb_substr($provinceName, 0, $length, 'UTF-8');
+	}
 } // End Welcome
