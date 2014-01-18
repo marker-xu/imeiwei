@@ -122,11 +122,13 @@ class Controller_Connect extends Controller
 			JKit::$log->debug(__FUNCTION__." bind uid-{$uid},connect_type-{$connectType},connect_id-{$bindUser['id']},token-", $accessToken);
 			
 			if($bindRet){
-				$this->close();
+				//$this->close();
+				$this->redirect("/admin");
 			}else{
 				//提示绑定失败，重新绑定
 				//exit('bind failure!');
-				$this->close();
+				//$this->close();
+				$this->redirect("/admin");
 			}
 			
 		}
