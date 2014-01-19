@@ -1,6 +1,6 @@
 <%extends file="common/base.tpl"%>
 
-<%block name="title"%>欢迎来到爱美味管理平台<%/block%>
+<%block name="title"%>欢迎来到爱美味管理平台-菜单品类<%/block%>
 <%block name="view_conf"%>
 <%/block%>
 
@@ -23,7 +23,7 @@
 			
 			<%include file="inc/admin/shop_header.inc"%>
 			<div id="base-info">
-				<h4>基本信息</h4>
+				<h4 class="tit4">菜单品类</h4>
 				<div class="form-body">
 					<table class="form-table" cellpadding="0" cellspacing="0" border="0">
 						<tr><td class="keys">商户名称:</td><td class="values"><input class="b-name-input" type="input" /></td></tr>

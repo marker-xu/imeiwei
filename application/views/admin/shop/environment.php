@@ -9,6 +9,7 @@
 <%/block%>
 
 <%block name="custom_js"%>
+<script type="text/javascript" src="<%#resUrl#%>/js/admin/common/common.js?v=<%#v#%>"></script>
 <script type="text/javascript" src="<%#resUrl#%>/js/admin/common/main-b.js?v=<%#v#%>"></script>
 <script type="text/javascript" src="<%#resUrl#%>/js/third/bootstrap/bootstrap.js"></script>
 <%/block%>
