@@ -7,7 +7,7 @@ $(document).ready(function(){
 	var phoneNum = 1; //当前的电话输入框个数
 	$('#addPhone').click(function(){
 		phoneNum ++;
-		var addPhoneHtml = '<br class="brs" /><input type="text" class="phone b-phone-input" /><a class="delPhone margin-l-little" href="javascript:void(0)">删除</a>';
+		var addPhoneHtml = '<br class="brs" /><input type="text" class="phone b-phone-input" name="phone[]" id="phone'+phoneNum+'" /><a class="delPhone margin-l-little" href="javascript:void(0)">删除</a>';
 		$('.add-phones').append(addPhoneHtml);
 		if(phoneNum==4){
 			$('#addPhone').hide();  
@@ -20,7 +20,7 @@ $(document).ready(function(){
 		var index = $('.delPhone').index(this);
 		index = index + 1;
 		
-		$('.phone').eq(index).remove();
+		$('.phone').eq(index-1).remove();
 		$('.brs').eq(index-1).remove();
 		$(this).remove();
 		if(phoneNum==2){

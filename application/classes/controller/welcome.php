@@ -11,6 +11,8 @@ class Controller_Welcome extends Controller {
 	
 	public function action_sample()
 	{
+		$obj = new Model_Data_Common();
+		print_r($obj->getCuisineList());
 		$this->template->set('person', 'akira');
 		//$this->response->body(__TEMPLATE__);
 	}
