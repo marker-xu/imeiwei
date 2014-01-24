@@ -23,11 +23,17 @@
 			<div id="base-info">
 				<h4 class="tit2">就餐环境</h4>
 				<div class="form-body">
+				<form  method="post" enctype="multipart/form-data"＞ 
+				<%Form::hidden('csrf_token', Security::token())%>
+				<%Form::hidden('shop_id', $intCurrentId)%>
 					<div class="no-shop-photo">
 						<br/><br/><br/>
 						你还没有上传就餐的环境照片，现在就来上传吧<br/>
-						<input type="button" name="submit-shop-photo" class="submit-shop-photo submit-mix" value="浏览..." />
+						<input type="button" name="shop_photo" class="submit-shop-photo submit-mix" value="浏览..." />
+						<br/>
+						<input type="submit" class="submit-shop-photo submit-mix"  value="提交"/>
 					</div>
+			    </form>
 				</div>
 			</div>
 			

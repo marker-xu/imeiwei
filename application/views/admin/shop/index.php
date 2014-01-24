@@ -6,13 +6,11 @@
 
 <%block name="custom_css"%>
 <link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/main-b.min.css?v=<%#v#%>">
-<link rel="stylesheet" type="text/css" href="<%#resUrl#%>/js/third/numkeybord/numkeybord.min.css?v=<%#v#%>">
 <%/block%>
 
 <%block name="custom_js"%>
 <script type="text/javascript" src="<%#resUrl#%>/js/admin/common/common.js?v=<%#v#%>"></script>
 <script type="text/javascript" src="<%#resUrl#%>/js/admin/common/main-b.js?v=<%#v#%>"></script>
-<script type="text/javascript" src="<%#resUrl#%>/js/third/numkeybord/numkeybord.js?v=<%#v#%>"></script>
 <script type="text/javascript" src="<%#resUrl#%>/js/third/bootstrap/bootstrap.js"></script>
 <%/block%>
 <%block name="bd"%>
@@ -52,8 +50,5 @@
 
 <%block name="foot_js"%>
 <script type="text/javascript">
-$(function(){
-					   $("input[name^='phone']").numkeybord();
-					});
 </script>
 <%/block%>
