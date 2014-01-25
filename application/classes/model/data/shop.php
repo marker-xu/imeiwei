@@ -63,7 +63,7 @@ class Model_Data_Shop {
         if( $strUserName ) {
             $arrParams["s_uname"] = $strUserName;
         }
-        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true );
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true, true );
         
         return isset($arrTmp["retcode"]) && $arrTmp["retcode"]===0;
     }
@@ -80,7 +80,7 @@ class Model_Data_Shop {
                 "i_user_id" => $intUid,
                 "op" => "favo"
         );
-        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true );
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true, true );
         
         return isset($arrTmp["retcode"]) && $arrTmp["retcode"]===0;
     }
@@ -97,7 +97,7 @@ class Model_Data_Shop {
                 "i_user_id" => $intUid,
                 "op" => "unfavo"
         );
-        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true );
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true, true );
         
         return isset($arrTmp["retcode"]) && $arrTmp["retcode"]===0;
     }
@@ -107,16 +107,20 @@ class Model_Data_Shop {
         $arrParams["type"] = "insert";
         $arrParams["s_name"] = $strShopName;
         $arrDefault = array(
-                "j_detail" => array(),
+                "j_detail" => new stdClass(),
                 "j_tel_number" => array(),
-                "j_promotion" => array(),
+                "j_promotion" => new stdClass(),
                 "i_take_out" => 0,
                 "j_tags" => array(),
                 "s_addr" => "",
                 "s_image" => ""
         );
         $arrParams +=  $arrDefault;
-        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams) );
+		$arrParams["j_detail"] = json_encode($arrParams["j_detail"]);
+		$arrParams["j_tel_number"] = json_encode($arrParams["j_tel_number"]);
+		$arrParams["j_tags"] = json_encode($arrParams["j_tags"]);
+		$arrParams["j_promotion"] = json_encode($arrParams["j_promotion"]);
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams) , false, true);
         
         return $arrTmp;
     }
@@ -129,12 +133,27 @@ class Model_Data_Shop {
     public function updateShopInfo( $intId, $arrInfo ) {
         $arrParams = $arrInfo;
         $arrParams["type"] = "update";
-        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true );
+		if(isset($arrParams["j_detail"])) {
+			$arrParams["j_detail"] = json_encode($arrParams["j_detail"]);
+		}
+		if(isset($arrParams["j_tel_number"])) {
+			$arrParams["j_tel_number"] = json_encode($arrParams["j_tel_number"]);
+		}
+		if(isset($arrParams["j_tags"])) {
+			$arrParams["j_tags"] = json_encode($arrParams["j_tags"]);
+		}
+		if(isset($arrParams["j_promotion"])) {
+			$arrParams["j_promotion"] = json_encode($arrParams["j_promotion"]);
+		}
+        $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams), true, true );
     
         return isset($arrTmp["retcode"]) && $arrTmp["retcode"]===0;
     }
     
-    public function request( $mixedAction, $arrParams=array(), $returnedAll=false ) {
+    public function request( $mixedAction, $arrParams=array(), $returnedAll=false, $isPost=false ) {
+	if($isPost) {
+	   $arrParams["method"] = "post";
+	}
         $strContent = Rpc::call($this->strConfigName, $mixedAction, $arrParams );
         
         if( !$strContent || !($arrResult = json_decode( $strContent, true ) ) ) {

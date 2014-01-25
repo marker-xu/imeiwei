@@ -19,8 +19,14 @@ class Controller_Admin_Shop extends Controller {
 	{
 		//$this->request->forward('guide');
 		$arrRules = $this->_formRule(array('@shop_name', '@shop_address'));	
+		$intShopId = $this->_user["admin_shop_id"];
 		if($this->request->method()!='POST') {
 			$objCommon = new Model_Data_Common();
+			$arrShopInfo = array();
+			if($intShopId) {
+				$arrShopInfo = $this->objModelShop->getInfo($intShopId);
+			}
+			$this->template->set("shop_info", $arrShopInfo);
 			$this->template->set("cuisine_list", $objCommon->getCuisineList());
 			return;
 		}

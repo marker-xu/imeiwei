@@ -26,17 +26,24 @@
 				<form action="javascript:void(0)" method="post" id="shop_info">
 					<%Form::hidden('csrf_token', Security::token())%>
 					<table class="form-table" cellpadding="0" cellspacing="0" border="0">
-						<tr><td class="keys">商户名称:</td><td class="values"><input class="b-name-input" type="input" name="shop_name" /></td></tr>
-						<tr><td>地　　址:</td><td class="values"><select><option value="111">上海浦东新区</option></select><input class="b-sdr-input margin-l-little" type="input" name="shop_address" /></td></tr>
+						<tr><td class="keys">商户名称:</td><td class="values"><input class="b-name-input" type="input" name="shop_name" value="<%$shop_info.s_name%>" /></td></tr>
+						<tr><td>地　　址:</td><td class="values"><select><option value="111">上海浦东新区</option></select><input class="b-sdr-input margin-l-little" type="input" name="shop_address" value="<%$shop_info.s_addr%>" /></td></tr>
 						<tr><td>主打菜系:</td><td class="values">
 						<select name="cuisine">
-						<option>请选择</option>
+						<option value="">请选择</option>
 						<%foreach $cuisine_list as $row%>
-						<option value="<%$row.s_name%>"><%$row.s_name%></option>
+						<option value="<%$row.s_name%>" <%if $shop_info.j_tags && in_array($row.s_name, $shop_info.j_tags)%>selected<%/if%>><%$row.s_name%></option>
 						<%/foreach%>
 						</select>
 						<a class="margin-l-little" href="#">没有你要的选项？</a></td></tr>
-						<tr><td>服务电话:</td><td class="values add-phones"><input type="text" class="b-phone-input" name="phone[]" id="phone01" /><a id="addPhone" class="margin-l-little" href="javascript:void(0)">增加</a></td></tr>
+						<tr><td>服务电话:</td><td class="values add-phones">
+						<%if $shop_info.j_tel_number%>
+						<%foreach $shop_info.j_tel_number as $phone%>
+						<input type="text" class="phone b-phone-input" name="phone[]" value="<%$phone%>" />
+						<a class="delPhone margin-l-little" href="javascript:void(0)">删除</a>
+						<%/foreach%>
+						<%/if%>
+						<input type="text" class="b-phone-input" name="phone[]" id="phone01" /><a id="addPhone" class="margin-l-little" href="javascript:void(0)">增加</a></td></tr>
 					</table>
 					<input id="submiter" type="button" name="submiter" class="submiter" value="保存" />
 				</form>
