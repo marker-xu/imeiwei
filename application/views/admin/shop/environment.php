@@ -41,6 +41,7 @@
 					<ol class="pages">
 						<li>4</li><li>3</li><li>2</li><li class="active">1</li>
 					</ol>
+					<%$pagination%>
 				</div>
 			</div>
 			

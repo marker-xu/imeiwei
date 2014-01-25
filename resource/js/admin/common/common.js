@@ -144,3 +144,23 @@ var amw = function(){};
 	};
 	amw.tabs = tabs;
 })();
+function processErrorMsg( msg ) {
+	var return_msg = "";
+	var query = "";
+	if( typeof(msg)=="object" ) {
+		for(var i in msg) {
+			query = "input[name='"+i+"'], select[name='"+i+"']";
+			if($(query).siblings("label").length) {
+				return_msg = $(query).siblings("label").text();
+			} else if($(query).parent().siblings().children().length) {
+				return_msg = $(query).parent().siblings().children().text();
+			}
+			return_msg = return_msg.replace(":", "").replace("：", "")+msg[i];
+			
+			break;
+		}
+	} else {
+		return_msg = msg || "error";
+	}
+	return return_msg;
+}
