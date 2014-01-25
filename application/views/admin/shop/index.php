@@ -23,7 +23,7 @@
 			<div id="base-info">
 				<h4>基本信息</h4>
 				<div class="form-body">
-				<form action="javascript:void(0)" method="post">
+				<form action="javascript:void(0)" method="post" id="shop_info">
 					<%Form::hidden('csrf_token', Security::token())%>
 					<table class="form-table" cellpadding="0" cellspacing="0" border="0">
 						<tr><td class="keys">商户名称:</td><td class="values"><input class="b-name-input" type="input" name="shop_name" /></td></tr>
@@ -32,7 +32,7 @@
 						<select name="cuisine">
 						<option>请选择</option>
 						<%foreach $cuisine_list as $row%>
-						<option value="<%$row.i_id%>"><%$row.s_name%></option>
+						<option value="<%$row.s_name%>"><%$row.s_name%></option>
 						<%/foreach%>
 						</select>
 						<a class="margin-l-little" href="#">没有你要的选项？</a></td></tr>
@@ -50,5 +50,16 @@
 
 <%block name="foot_js"%>
 <script type="text/javascript">
+$("#submiter").click(function(){
+    $.post("/admin/shop/index", $("#shop_info").serialize(), function(data){
+    	if(data.err=='ok'){
+        	alert("保存成功");
+    		window.location.reload();
+ 		}else{
+ 			alert(data.msg);
+ 		}
+    } );
+	return false;
+})
 </script>
 <%/block%>

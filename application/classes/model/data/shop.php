@@ -106,6 +106,16 @@ class Model_Data_Shop {
         $arrParams = $arrInfo;
         $arrParams["type"] = "insert";
         $arrParams["s_name"] = $strShopName;
+        $arrDefault = array(
+                "j_detail" => array(),
+                "j_tel_number" => array(),
+                "j_promotion" => array(),
+                "i_take_out" => 0,
+                "j_tags" => array(),
+                "s_addr" => "",
+                "s_image" => ""
+        );
+        $arrParams +=  $arrDefault;
         $arrTmp = $this->request($this->strBaseUrl, array("post_vars" => $arrParams) );
         
         return $arrTmp;

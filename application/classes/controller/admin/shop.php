@@ -2,15 +2,23 @@
 
 class Controller_Admin_Shop extends Controller {
     
+    private $objModelShop;
+    
     public function before() {
         parent::before();
-        $this->template->set("current_action", $this->request->action() );
+        $this->_needLogin();
+        $this->objModelShop = new Model_Data_Shop();
+        $strAction = $this->request->action();
+        $this->template->set("current_action", $strAction );
+        if(!$this->_user["admin_shop_id"] && $strAction && $strAction!="index" ) {
+//             $this->request->redirect(URL::site("admin/shop"));
+        }
     }
 
 	public function action_index()
 	{
 		//$this->request->forward('guide');
-		$arrRules = $this->_formRule(array('@shop_name', '@address'));	
+		$arrRules = $this->_formRule(array('@shop_name', '@shop_address'));	
 		if($this->request->method()!='POST') {
 			$objCommon = new Model_Data_Common();
 			$this->template->set("cuisine_list", $objCommon->getCuisineList());
@@ -21,7 +29,6 @@ class Controller_Admin_Shop extends Controller {
 		if (! $this->valid($objValidation)) {
 			return;
 		}
-		$objModelShop = new Model_Data_Shop();
 		$strShopName = trim( $arrPost["shop_name"] );
 		$arrParams = array(
 		        "s_addr" => $arrPost["shop_address"],
@@ -29,27 +36,52 @@ class Controller_Admin_Shop extends Controller {
 		        "j_tags" => array($arrPost["cuisine"]),
 		        "i_boss_uid" => $this->_uid
 		);
-		$res = $objModelShop->addShopInfo($strShopName, $arrParams);
+		$res = $this->objModelShop->addShopInfo($strShopName, $arrParams);
 		if ( !$res ) {
-		    $this->err(null, "用户创建失败！");
+		    $this->err(null, "商家创建失败！");
 		}
-		
+		$objLogicUser = new Model_Logic_User();
+		$objLogicUser->modifyUser($this->_uid, array(
+		        "admin_shop_id" => $res["i_id"]
+		));
 		$this->ok();
 	}
 	
 	public function action_environment() {
+	    $page = (int) $this->request->param('page', 1);
+	     
+	    $count = 12;
+	    $offset = ($page-1)*$count;
+	    $intShopId = $this->_user["admin_shop_id"];
+	    $objLogicShop = new Model_Logic_Shop();
+	    $arrList = $objLogicShop->getEnvPhotoList($intShopId, $offset, $count);
+	    $pagination = Pagination::factory(array(
+	            'total_items' => $arrList["total"],
+	            'items_per_page' => $count
+	    ));
+	    $this->template->set('pagination', $pagination);
+	    $this->template->set('logo_list', $arrList);
 	}
 
 	public function action_env_add() {
 	    if($this->request->method()!='POST') {
+	        $intShopId = $this->_user["admin_shop_id"];
 	        $this->template->set("shop_id", 12345);
 	        return;
 	    }
 	    $avatar = $_FILES['shop_photo'];
-	    $validAvatar = $this->validAvatar($avatar);
+	    $validAvatar = $this->validShopLogo($avatar);
 	    if( !$validAvatar['ok'] ) {
-	        $this->avatarCB(false, '', $validAvatar['msg']);
+	        $ths->err(NULL, $validAvatar["msg"]);
 	    }
+	    $intShopId = $this->_user["admin_shop_id"];
+	    $objLogicShop = new Model_Logic_Shop();
+	    $intImgId = $objLogicShop->saveEnvPhoto($_FILES['shop_photo']["tmp_name"], $intShopId);
+	    
+	    $this->objModelShop->updateShopInfo($intShopId, array(
+	            "s_image" => $intImgId
+	    ));
+	    $this->request->redirect(URL::site("admin/shop/environment"));
 	}
 
 	public function action_category() {
@@ -80,7 +112,7 @@ class Controller_Admin_Shop extends Controller {
                     'reqmsg' => '商户名称',
                     'maxlength' => 20
             ),
-			'@address' => array(
+			'@shop_address' => array(
                     'datatype' => 'text',
                     'reqmsg' => '地址',
                     'maxlength' => 20
@@ -114,12 +146,12 @@ class Controller_Admin_Shop extends Controller {
 	            'msg' => ''
 	    );
 	    if(! $avatar['tmp_name']) {
-	        $arrReturn['msg'] = "头像不能为空";
+	        $arrReturn['msg'] = "图片不能为空";
 	        return $arrReturn;
 	    }
 	
 	    if($avatar['error'] !== UPLOAD_ERR_OK) {
-	        $arrReturn['msg'] = "头像上传失败";
+	        $arrReturn['msg'] = "图片上传失败";
 	        return $arrReturn;
 	    }
 	
