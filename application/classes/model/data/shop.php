@@ -133,6 +133,7 @@ class Model_Data_Shop {
     public function updateShopInfo( $intId, $arrInfo ) {
         $arrParams = $arrInfo;
         $arrParams["type"] = "update";
+        $arrParams["i_id"] = $intId;
 		if(isset($arrParams["j_detail"])) {
 			$arrParams["j_detail"] = json_encode($arrParams["j_detail"]);
 		}

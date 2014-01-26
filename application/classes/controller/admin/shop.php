@@ -42,14 +42,23 @@ class Controller_Admin_Shop extends Controller {
 		        "j_tags" => array($arrPost["cuisine"]),
 		        "i_boss_uid" => $this->_uid
 		);
-		$res = $this->objModelShop->addShopInfo($strShopName, $arrParams);
-		if ( !$res ) {
-		    $this->err(null, "商家创建失败！");
+		if($intShopId) {
+		    $arrParams["s_name"] = $strShopName;
+		    $res = $this->objModelShop->updateShopInfo($intShopId, $arrParams);
+		    if ( !$res ) {
+		        $this->err(null, "商家信息保存失败！");
+		    }
+		} else {
+		    $res = $this->objModelShop->addShopInfo($strShopName, $arrParams);
+		    if ( !$res ) {
+		        $this->err(null, "商家创建失败！");
+		    }
+		    $objLogicUser = new Model_Logic_User();
+		    $objLogicUser->modifyUser($this->_uid, array(
+		            "admin_shop_id" => $res["i_id"]
+		    ));
 		}
-		$objLogicUser = new Model_Logic_User();
-		$objLogicUser->modifyUser($this->_uid, array(
-		        "admin_shop_id" => $res["i_id"]
-		));
+		
 		$this->ok();
 	}
 	
