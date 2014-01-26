@@ -6,6 +6,11 @@
 
 <%block name="custom_css"%>
 <link rel="stylesheet" type="text/css" href="<%#resUrl#%>/css/main-b.min.css?v=<%#v#%>">
+<style>
+.txt{ height:22px; border:1px solid #cdcdcd; width:180px;} 
+.btn{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;} 
+.file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
+</style>
 <%/block%>
 
 <%block name="custom_js"%>
@@ -29,10 +34,12 @@
 					<div class="no-shop-photo">
 						<br/><br/><br/>
 						你还没有上传就餐的环境照片，现在就来上传吧<br/>
-						<input type="button" name="shop_photo" class="submit-shop-photo submit-mix" value="浏览..." />
-						<br/>
-						<input type="submit" class="submit-shop-photo submit-mix"  value="提交"/>
+						<input type='text' name='textfield' class='txt' /> 
+						<input type="button" class="submit-shop-photo submit-mix" value="浏览..." />
+						<input type="file" name="shop_photo" class="file" size="28"  /> 
 					</div>
+					<br/>
+						<input type="submit" class="submit-shop-photo submit-mix"  value="提交"/>
 			    </form>
 				</div>
 			</div>
@@ -44,5 +51,11 @@
 
 <%block name="foot_js"%>
 <script type="text/javascript">
+$(document).ready(function(){
+    $("input[name='shop_photo']").change(function(){
+    	$("input[name='textfield']").val($(this).val());
+        });
+	
+});
 </script>
 <%/block%>
