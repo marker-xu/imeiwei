@@ -92,6 +92,9 @@ class Controller_Admin_Shop extends Controller {
 
 	public function action_category() {
 	}
+	
+	public function action_cat_add() {
+	}
 
 	public function action_hours() {
 	}

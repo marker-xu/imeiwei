@@ -28,7 +28,7 @@ class ModelDataRecommendTest extends UnitTestCase {
     }
     
     public function test_getInfo() {
-//         return;
+        return;
     	$intId = 12;
     	$arr  = $this->_model->getInfo($intId);
     	print_r($arr);
@@ -43,7 +43,7 @@ class ModelDataRecommendTest extends UnitTestCase {
     	$this->assertIsA($arr, "array");
     }
     public function test_addShopPraise() {
-//     	return;
+    	return;
 
     	$intId = "10";
     	$intUid = 105;
@@ -61,7 +61,17 @@ class ModelDataRecommendTest extends UnitTestCase {
     	
     }
     
-    public function test_relatedCircles() {
+    public function test_addShopInfo() {
+        $strShopName = "海上传奇三期";
+        $arrInfo = array(
+                "j_tel_number" => array(13521987647),
+                "j_tags" => "请选择",
+                "i_boss_uid" => 105,
+                "s_addr" => "华夏中路30号"
+        );
+        $res = $this->_model->addShopInfo($strShopName, $arrInfo);
+        var_dump($res);
+        $this->assertIsA($res, "array");
         return;
     }
     

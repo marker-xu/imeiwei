@@ -85,4 +85,6 @@ $(document).ready(function(){
 		var position = $('#weekTabs').position();
 		addCaitips.show(position.left + 180,position.top + 122);
 	});
+	//菜品tab
+	var caiTabs = new amw.tabs('#caiTabs .weekItem','#caiTabs .weekTabContent','active2');
 });
