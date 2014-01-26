@@ -41,6 +41,7 @@
 						<%foreach $shop_info.j_tel_number as $phone%>
 						<input type="text" class="phone b-phone-input" name="phone[]" value="<%$phone%>" />
 						<a class="delPhone margin-l-little" href="javascript:void(0)">删除</a>
+						<br class="brs">
 						<%/foreach%>
 						<%/if%>
 						<input type="text" class="b-phone-input" name="phone[]" id="phone01" /><a id="addPhone" class="margin-l-little" href="javascript:void(0)">增加</a></td></tr>
