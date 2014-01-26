@@ -57,6 +57,7 @@ class Controller_Admin_Shop extends Controller {
 		    $objLogicUser->modifyUser($this->_uid, array(
 		            "admin_shop_id" => $res["i_id"]
 		    ));
+		    $objLogicUser->changeSession($this->_uid);
 		}
 		
 		$this->ok();
