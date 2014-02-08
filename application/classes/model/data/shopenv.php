@@ -26,7 +26,7 @@ class Model_Data_Shopenv extends Model_Data_MongoCollection {
 	
 	public function initEnvStoreDir( $intShopId ) {
 	    $strPathName = $this->getEnvStoreDir($intShopId);
-	    if( !is_dir($filename) ) {
+	    if( !is_dir($strPathName) ) {
 	        @mkdir($strPathName, 0666, true);
 	    }
 	}

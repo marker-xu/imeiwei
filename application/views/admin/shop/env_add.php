@@ -9,7 +9,7 @@
 <style>
 .txt{ height:22px; border:1px solid #cdcdcd; width:180px;} 
 .btn{ background-color:#FFF; border:1px solid #CDCDCD;height:24px; width:70px;} 
-.file{ position:absolute; top:0; right:80px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
+.file{ position:absolute; top:479px; left:1024px; height:24px; filter:alpha(opacity:0);opacity: 0;width:260px }
 </style>
 <%/block%>
 
@@ -28,9 +28,10 @@
 			<div id="base-info">
 				<h4 class="tit2">就餐环境</h4>
 				<div class="form-body">
-				<form  method="post" enctype="multipart/form-data"＞ 
-				<%Form::hidden('csrf_token', Security::token())%>
-				<%Form::hidden('shop_id', $intCurrentId)%>
+				<form  method="post" enctype="multipart/form-data" action="/admin/shop/env_add"＞
+                <br />
+				<%Form::hidden('shop_id', $shop_id)%>
+                <%Form::hidden('csrf_token', Security::token())%>
 					<div class="no-shop-photo">
 						<br/><br/><br/>
 						你还没有上传就餐的环境照片，现在就来上传吧<br/>

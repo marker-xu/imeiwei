@@ -51,7 +51,7 @@
 				</form>
 				</div>
             <%else%>
-                <h4 class="tit1"><p class="h4link"><a href="/admin/shop/index?is_edit=1">编辑</a></p>基本信息</h4>
+                <h4 class="tit1"><p class="h4link"><a href="/admin/shop/index?edit=1">编辑</a></p>基本信息</h4>
 				<div class="form-body">
 					<table class="form-table" cellpadding="0" cellspacing="0" border="0">
 						<tr><td class="keys">商户名称:</td><td class="values"><%$shop_info.s_name%></td></tr>
@@ -68,7 +68,7 @@
 						<tr><td>服务电话:</td>
                         <%if $shop_info.j_tel_number%>
 						<%foreach $shop_info.j_tel_number as $phone%>
-                        <td class="values">
+                        <td class="values">d
 							<%$phone%>
 						</td>
                         <%/foreach%>

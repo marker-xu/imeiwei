@@ -82,9 +82,10 @@ class Controller_Admin_Shop extends Controller {
 	}
 
 	public function action_env_add() {
+        $intShopId = $this->_user["admin_shop_id"];
 	    if($this->request->method()!='POST') {
 	        $intShopId = $this->_user["admin_shop_id"];
-	        $this->template->set("shop_id", 12345);
+	        $this->template->set("shop_id", $intShopId);
 	        return;
 	    }
 	    $avatar = $_FILES['shop_photo'];
@@ -92,7 +93,7 @@ class Controller_Admin_Shop extends Controller {
 	    if( !$validAvatar['ok'] ) {
 	        $ths->err(NULL, $validAvatar["msg"]);
 	    }
-	    $intShopId = $this->_user["admin_shop_id"];
+	    
 	    $objLogicShop = new Model_Logic_Shop();
 	    $intImgId = $objLogicShop->saveEnvPhoto($_FILES['shop_photo']["tmp_name"], $intShopId);
 	    
