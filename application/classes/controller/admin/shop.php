@@ -26,7 +26,9 @@ class Controller_Admin_Shop extends Controller {
 			if($intShopId) {
 				$arrShopInfo = $this->objModelShop->getInfo($intShopId);
 			}
+            $isEdit = $this->request->query("edit")!==NULL || !$arrShopInfo;
 			$this->template->set("shop_info", $arrShopInfo);
+            $this->template->set("is_edit", $isEdit);
 			$this->template->set("cuisine_list", $objCommon->getCuisineList());
 			return;
 		}

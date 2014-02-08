@@ -21,6 +21,7 @@
 			
 			<%include file="inc/admin/shop_header.inc"%>
 			<div id="base-info">
+            <%if $is_edit%>
 				<h4>基本信息</h4>
 				<div class="form-body">
 				<form action="javascript:void(0)" method="post" id="shop_info">
@@ -49,6 +50,34 @@
 					<input id="submiter" type="button" name="submiter" class="submiter" value="保存" />
 				</form>
 				</div>
+            <%else%>
+                <h4 class="tit1"><p class="h4link"><a href="/admin/shop/index?is_edit=1">编辑</a></p>基本信息</h4>
+				<div class="form-body">
+					<table class="form-table" cellpadding="0" cellspacing="0" border="0">
+						<tr><td class="keys">商户名称:</td><td class="values"><%$shop_info.s_name%></td></tr>
+						<tr><td>地　　址:</td><td class="values"><%$shop_info.s_addr%></td></tr>
+						<tr><td>主打菜系:</td>
+                        <%if $shop_info.j_tags%>
+						<%foreach $shop_info.j_tags as $tag%>
+                        <td class="values">
+							<%$tag%>
+						</td>
+                        <%/foreach%>
+						<%/if%>
+                        </tr>
+						<tr><td>服务电话:</td>
+                        <%if $shop_info.j_tel_number%>
+						<%foreach $shop_info.j_tel_number as $phone%>
+                        <td class="values">
+							<%$phone%>
+						</td>
+                        <%/foreach%>
+						<%/if%>
+                        </tr>
+					</table>
+					
+				</div>
+            <%/if%>
 			</div>
 			
 		</div>
