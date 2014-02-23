@@ -67,11 +67,11 @@
                         </tr>
 						<tr><td>服务电话:</td>
                         <%if $shop_info.j_tel_number%>
+                        <td class="values">
 						<%foreach $shop_info.j_tel_number as $phone%>
-                        <td class="values">d
-							<%$phone%>
-						</td>
+							<%$phone%><br />
                         <%/foreach%>
+						</td>
 						<%/if%>
                         </tr>
 					</table>
