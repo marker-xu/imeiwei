@@ -78,7 +78,7 @@ class Controller_Admin_Shop extends Controller {
 	            'items_per_page' => $count
 	    ));
 	    $this->template->set('pagination', $pagination);
-	    $this->template->set('logo_list', $arrList);
+	    $this->template->set('logo_list', $arrList["list"]);
 	}
 
 	public function action_env_add() {
@@ -89,14 +89,14 @@ class Controller_Admin_Shop extends Controller {
 	        return;
 	    }
 	    $avatar = $_FILES['shop_photo'];
+	    
 	    $validAvatar = $this->validShopLogo($avatar);
 	    if( !$validAvatar['ok'] ) {
-	        $ths->err(NULL, $validAvatar["msg"]);
+	        $this->err(NULL, $validAvatar["msg"]);
 	    }
 	    
 	    $objLogicShop = new Model_Logic_Shop();
 	    $intImgId = $objLogicShop->saveEnvPhoto($_FILES['shop_photo']["tmp_name"], $intShopId);
-	    
 	    $this->objModelShop->updateShopInfo($intShopId, array(
 	            "s_image" => $intImgId
 	    ));

@@ -30,6 +30,9 @@ class Model_Logic_Shop extends Model {
 	    $objImage->resize(82, 82);
 	    $objImage->save($thumb82TmpName, 92);
 	    move_uploaded_file($strOrgPhoto, $thumbOrgTmpName);
+	    var_dump( file_exists($thumbOrgTmpName) );
+	    var_dump( file_exists($thumb165TmpName) );
+	    var_dump( file_exists($thumb82TmpName) );
 	    $arrParams = array(
 	            "logo_org" => "http://".DOMAIN_SITE."/shop_env/{$intShopId}/".basename($thumbOrgTmpName),
 	            "thumb" => array(
@@ -63,7 +66,7 @@ class Model_Logic_Shop extends Model {
 	            "_id"
 	    );
 	    $sort = array(
-	            "create_time" => -1
+	            "_id" => -1
 	    );
 	    $arrReturn["total"] = $objModelShopenv->count($query);
 	    if( $arrReturn["total"] ) {

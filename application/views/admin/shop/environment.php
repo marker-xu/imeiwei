@@ -25,22 +25,16 @@
 				<a href="/admin/shop/env_add" style="float: right;">上传新图</a>
 				<div class="form-body">
 					<ul class="shop-photo float_box">
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
-						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
+					<%foreach $logo_list as $row%>
+					<li><a href="" target="_blank"><img src="<%$row.thumb.165%>" /></a></li>
+					<%/foreach%>
 						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
 						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
 						<li><a href="" target="_blank"><img src="<%#resUrl#%>/css/img/shop-photo.jpg?v=<%#v#%>" /></a></li>
 					</ul>
-					<ol class="pages">
-						<li>4</li><li>3</li><li>2</li><li class="active">1</li>
-					</ol>
+<!-- 					<ol class="pages"> -->
+<!-- 						<li>4</li><li>3</li><li>2</li><li class="active">1</li> -->
+<!-- 					</ol> -->
 					<%$pagination%>
 				</div>
 			</div>

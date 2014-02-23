@@ -11,7 +11,7 @@ class Model_Data_Shopenv extends Model_Data_MongoCollection {
 	}
 	
 	public function addShopEnv( $intShopId, $arrParams ) {
-	    $arrParams["_id"] = self::getUniqueCode("shop_env");
+	    $arrParams["_id"] = self::getUniqueValue("shop_env");
 	    $arrParams["shop_id"] = $intShopId;
 	    if( !isset($arrParams['create_time']) ) {
 	        $arrParams['create_time'] = new MongoDate();
@@ -27,7 +27,7 @@ class Model_Data_Shopenv extends Model_Data_MongoCollection {
 	public function initEnvStoreDir( $intShopId ) {
 	    $strPathName = $this->getEnvStoreDir($intShopId);
 	    if( !is_dir($strPathName) ) {
-	        @mkdir($strPathName, 0666, true);
+	        @mkdir($strPathName, 0777, true);
 	    }
 	}
 	
