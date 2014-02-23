@@ -69,7 +69,7 @@
                         <%if $shop_info.j_tel_number%>
                         <td class="values">
 						<%foreach $shop_info.j_tel_number as $phone%>
-							<%$phone%><br />
+							<p><%$phone%></p>
                         <%/foreach%>
 						</td>
 						<%/if%>

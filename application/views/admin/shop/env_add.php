@@ -56,7 +56,9 @@ $(document).ready(function(){
     $("input[name='shop_photo']").change(function(){
     	$("input[name='textfield']").val($(this).val());
         });
-	
+    var offsetTmp = $("input.submit-shop-photo").offset();
+	$("input[name='shop_photo']").css('top', offsetTmp.top);
+	$("input[name='shop_photo']").css('left', offsetTmp.left);
 });
 </script>
 <%/block%>
