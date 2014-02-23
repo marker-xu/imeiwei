@@ -17,6 +17,11 @@ class Model_Logic_Shop extends Model {
 	    
 	}
 	
+	public function getShopInfo( $intShopId ) {
+	    $arrShopInfo = $this->objModelShop->getInfo($intShopId);
+	    return $arrShopInfo;
+	}
+	
 	public function saveEnvPhoto( $strOrgPhoto, $intShopId ) {
 	    $objModelShopenv = new Model_Data_Shopenv( );
 	    $objModelShopenv->initEnvStoreDir( $intShopId );
@@ -28,7 +33,7 @@ class Model_Logic_Shop extends Model {
 	    $objImage->resize(165, 115);
 	    $objImage->save($thumb165TmpName, 85);
 	    $objImage->resize(82, 82);
-	    $objImage->save($thumb82TmpName, 92);
+	    $objImage->save($thumb82TmpName, 82);
 	    move_uploaded_file($strOrgPhoto, $thumbOrgTmpName);
 	    var_dump( file_exists($thumbOrgTmpName) );
 	    var_dump( file_exists($thumb165TmpName) );
@@ -76,5 +81,17 @@ class Model_Logic_Shop extends Model {
 	        }
 	    }
 	    return $arrReturn;
+	}
+	
+	public function setShopLogo($intShopId, $intImgId, $intUserId) {
+	    $objModelShopenv = new Model_Data_Shopenv( );
+	    $arrShopEnv = $objModelShopenv->findOne( array("_id"=>$intImgId) );
+	    if(!$arrShopEnv) {
+	        return;
+	    }
+	    return $this->objModelShop->updateShopInfo($intShopId, array(
+	            "s_image" => $arrShopEnv["thumb"]["82"],
+	            "i_boss_uid" => $intUserId
+	    ));
 	}
 }

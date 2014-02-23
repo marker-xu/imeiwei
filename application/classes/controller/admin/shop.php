@@ -4,14 +4,24 @@ class Controller_Admin_Shop extends Controller {
     
     private $objModelShop;
     
+    private $objLogicShop;
+    
     public function before() {
         parent::before();
         $this->_needLogin();
         $this->objModelShop = new Model_Data_Shop();
+        $this->objLogicShop = new Model_Logic_Shop();
         $strAction = $this->request->action();
         $this->template->set("current_action", $strAction );
-        if(!$this->_user["admin_shop_id"] && $strAction && $strAction!="index" ) {
-//             $this->request->redirect(URL::site("admin/shop"));
+        
+        $arrNeedShopAction = array(
+                "environment" => 1,
+                "env_add" => 1
+        );
+        if(!$this->_user["admin_shop_id"] && $strAction && isset( $arrNeedShopAction[$strAction] ) ) {
+            $this->request->redirect(URL::site("admin/shop"));
+        } else {
+            $this->template->set("current_shop_info", $this->objLogicShop->getShopInfo($this->_user["admin_shop_id"]) );
         }
     }
 
@@ -71,8 +81,7 @@ class Controller_Admin_Shop extends Controller {
 	    $count = 12;
 	    $offset = ($page-1)*$count;
 	    $intShopId = $this->_user["admin_shop_id"];
-	    $objLogicShop = new Model_Logic_Shop();
-	    $arrList = $objLogicShop->getEnvPhotoList($intShopId, $offset, $count);
+	    $arrList = $this->objLogicShop->getEnvPhotoList($intShopId, $offset, $count);
 	    $pagination = Pagination::factory(array(
 	            'total_items' => $arrList["total"],
 	            'items_per_page' => $count
@@ -95,11 +104,9 @@ class Controller_Admin_Shop extends Controller {
 	        $this->err(NULL, $validAvatar["msg"]);
 	    }
 	    
-	    $objLogicShop = new Model_Logic_Shop();
-	    $intImgId = $objLogicShop->saveEnvPhoto($_FILES['shop_photo']["tmp_name"], $intShopId);
-	    $this->objModelShop->updateShopInfo($intShopId, array(
-	            "s_image" => $intImgId
-	    ));
+	    $intImgId = $this->objLogicShop->saveEnvPhoto($_FILES['shop_photo']["tmp_name"], $intShopId);
+	    
+	    $this->objLogicShop->setShopLogo($intShopId, $intImgId, $this->_uid);
 	    $this->request->redirect(URL::site("admin/shop/environment"));
 	}
 

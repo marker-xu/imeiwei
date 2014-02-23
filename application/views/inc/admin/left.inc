@@ -1,7 +1,7 @@
 			<div class="navgations">
 			<div class="head-pic">
 				<div class="pic">
-					<img src="<%#resUrl#%>/css/img/headphoto.jpg?v=<%#v#%>" class="head" />
+					<img src="<%if $current_shop_info.s_image%><%$current_shop_info.s_image%><%else%><%#resUrl#%>/css/img/headphoto.jpg?v=<%#v#%><%/if%>" class="head" />
 				</div>
 			</div>
 			<ul id="navlist">

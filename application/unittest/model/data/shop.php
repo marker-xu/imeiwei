@@ -62,6 +62,7 @@ class ModelDataRecommendTest extends UnitTestCase {
     }
     
     public function test_addShopInfo() {
+        return;
         $strShopName = "海上传奇三期";
         $arrInfo = array(
                 "j_tel_number" => array(13521987647),
@@ -75,10 +76,19 @@ class ModelDataRecommendTest extends UnitTestCase {
         return;
     }
     
-    public function test_videoRecommendReason()
-    {
-        $result = array('d3118018a75f59235ea4ba9a9dcd8b1d', 'e84141846d751f8e8e4e73e62290e26a', 
-            'aa8e7bd89271ba7e70042b4fdb266d61');
-    	$this->assertTrue($result);
+    public function test_updatesShopInfo() {
+//         return;
+        $strShopName = "海上传奇三期";
+        $intUid = 105;
+        $arrInfo = array(
+                "s_image" => "http://www.aimeiwei.cc/shop_env/6/eab7932f578cd5773e95bdb6f05ee4d6.jpg",
+                "i_boss_uid" => $intUid
+        );
+        $intId = 6;
+        print_r($arrInfo);
+        $res = $this->_model->updateShopInfo($intId, $arrInfo);
+        var_dump($res);
+        $this->assertTrue($res);
+        return;
     }
 }
