@@ -1,22 +1,35 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Api extends Controller {
+class Controller_Api extends Controller
+{
 	
 	private $objLogicMmshow;
-	
-	public function before() {
+
+    /**
+     *
+     */
+	public function before()
+    {
 		parent::before();
 		
 		$this->objLogicMmshow = new Model_Logic_Mmshow();
 	}
-	
-	public function action_list() {
+
+    /**
+     *
+     */
+	public function action_list()
+    {
 		$arrResult = $this->objLogicMmshow->getRecommendResult(15);
 		
 		$this->ok($arrResult);
 	}
-	
-	public function action_info() {
+
+    /**
+     *
+     */
+	public function action_info()
+    {
 		$postId = $this->request->query("pid");
 		$strFrom = $this->request->query("from");
 		$arrInfo = $this->objLogicMmshow->getPostInfo($strFrom, $postId);
@@ -39,8 +52,12 @@ class Controller_Api extends Controller {
 //		print_r($arrInfo);
 		$this->ok($arrInfo);
 	}
-	
-	public function action_spotimg() {
+
+    /**
+     *
+     */
+	public function action_spotimg()
+    {
 		$postId = $this->request->query("pid");
 		$strFrom = $this->request->query("from");
 		$arrInfo = $this->objLogicMmshow->getPostInfo($strFrom, $postId);
@@ -80,7 +97,13 @@ class Controller_Api extends Controller {
     	$this->response->headers('Expires', gmdate('D, d M Y H:i:s', time() + $expire) . ' GMT');
 		$this->response->body( $strImgContent );
 	}
-	
+
+    /**
+     * @param $strContent
+     * @param $arrPicList
+     * @param $strFrom
+     * @return array
+     */
 	private function rebuildContent($strContent, $arrPicList, $strFrom) {
 		$arrReturn = array(
 			
