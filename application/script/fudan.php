@@ -38,6 +38,9 @@ $intUsageTime = microtime(true) - $t;
 $strBody = "Complete: {$intCount}, Timeusage: {$intUsageTime}ms";
 die($strBody);
 
+/**
+ * @param $arrParams
+ */
 function writeDataIntoMongo( $arrParams ) {
 	global $objModelEstdata, $objModelPostInfo;
 	
@@ -57,6 +60,10 @@ function writeDataIntoMongo( $arrParams ) {
 	}
 }
 
+/**
+ * @param bool $isSingle
+ * @return false|string
+ */
 function getStartDate( $isSingle=false ) {
 	global $objModelEstdata;
 	$strDate = date("Y-m-d H:i:s", strtotime("-1 day"));

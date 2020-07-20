@@ -18,7 +18,10 @@ class DemoTest extends UnitTestCase
         print_r(mb_strimwidth($str, 0, 4, '', "UTF-8"));
         print_r(mb_internal_encoding());
     }
-    
+
+    /**
+     * @return string[]
+     */
     function test_image() {
         $sourceImage = DOCROOT."resource/images/366.png";
         $thumb200TmpName = "/tmp/imeiwei/".uniqid("100").".jpg";

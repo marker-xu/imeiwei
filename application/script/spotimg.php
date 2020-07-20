@@ -29,6 +29,7 @@ $arrUpdateQuery = array(
 	"file" => "",
 	"from" => ""
 );
+
 foreach ($arrPostlist as $row) {
 	if(!$row['spot_pic']) {
 		continue;

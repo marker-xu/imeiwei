@@ -38,4 +38,5 @@ return array
 			'timeout'    => 1000,
 	    ),
 	),
+    'test' => [],
 );

@@ -26,6 +26,9 @@ $intUsageTime = microtime(true) - $t;
 $strBody = "Complete: {$intCount}, Timeusage: {$intUsageTime}ms";
 die($strBody);
 
+/**
+ * @param $arrParams
+ */
 function writeDataIntoMongo( $arrParams ) {
 	global $objModelEstdata, $objModelPostInfo;
 	
