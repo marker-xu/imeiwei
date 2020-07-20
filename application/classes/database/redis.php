@@ -100,6 +100,9 @@ class Database_Redis extends Database
 	    return $connection;
 	}
 
+    /**
+     * @param $charset
+     */
 	public function set_charset($charset) 
 	{
 		throw new Kohana_Exception('Database method :method is not supported by :class',
@@ -118,30 +121,47 @@ class Database_Redis extends Database
 			array(':method' => __FUNCTION__, ':class' => __CLASS__));
 	}
 
+    /**
+     *
+     */
 	public function commit()
 	{
 		throw new Kohana_Exception('Database method :method is not supported by :class',
 			array(':method' => __FUNCTION__, ':class' => __CLASS__));
 	}
 
+    /**
+     *
+     */
 	public function rollback()
 	{
 		throw new Kohana_Exception('Database method :method is not supported by :class',
 			array(':method' => __FUNCTION__, ':class' => __CLASS__));
 	}
 
+    /**
+     * @param null $like
+     */
 	public function list_tables($like = NULL)
 	{
 		throw new Kohana_Exception('Database method :method is not supported by :class',
 			array(':method' => __FUNCTION__, ':class' => __CLASS__));
 	}
 
+    /**
+     * @param $table
+     * @param null $like
+     * @param bool $add_prefix
+     */
 	public function list_columns($table, $like = NULL, $add_prefix = TRUE)
 	{
 		throw new Kohana_Exception('Database method :method is not supported by :class',
 			array(':method' => __FUNCTION__, ':class' => __CLASS__));
 	}
 
+    /**
+     * @param $value
+     */
 	public function escape($value)
 	{
 		throw new Kohana_Exception('Database method :method is not supported by :class',
