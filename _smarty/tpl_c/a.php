@@ -9,5 +9,6 @@
     'apiUrl' => 'http://www.aimeiwei.cc',
     'v' => '1.0.5',
     'combo' => '',
+      'test' => '',
   ),
 ); ?>

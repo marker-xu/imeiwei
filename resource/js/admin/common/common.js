@@ -5,6 +5,7 @@
 var amw = function(){};
 	amw.extend=function(c,d){
 		for(var e in d){c[e]=d[e]}
+		var test = 'ok';
 		return c;
 	};
  /*tips组件*/
