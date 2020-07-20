@@ -637,4 +637,26 @@ class Util
     {
         return 'http://'.DOMAIN_SITE.'/star/info/'.urlencode($star['name']);
     }
+
+    /**
+     * 获取logID
+     *
+     * @return string
+     */
+    public static function getLogId()
+    {
+        static $consoleRequestId;
+        if ($consoleRequestId !== null)
+        {
+            return $consoleRequestId . getmypid() . floor(time() / 300);
+        }
+        $params = array_merge($_GET, $_POST);
+        $salt = sprintf("host-%s,script-%s,params-%s,timestamp-%s",
+            $_SERVER['HOSTNAME'] ?? '',
+            $_SERVER['SCRIPT_NAME'] ?? '',
+            json_encode($params),
+            microtime(true));
+        $consoleRequestId = 'n1' . md5($salt);
+        return $consoleRequestId . getmypid() . floor(time() / 300);
+    }
 }
