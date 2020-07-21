@@ -8,7 +8,7 @@ class DemoTest extends UnitTestCase
     }
 
     /**
-     * 
+     *
      */
     function setUp() {}
 
