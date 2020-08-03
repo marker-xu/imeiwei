@@ -12,7 +12,6 @@ use Yii;
  * @package common\library
  * @desc: Aliyunoss
  * @name: Aliyunoss
- * @author xucongbin
  * @date 2019/11/58:40 PM
  */
 class Aliyunoss extends Component
