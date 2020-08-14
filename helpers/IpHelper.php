@@ -4,6 +4,14 @@
 namespace common\helpers;
 
 
+/**
+ * Class IpHelper
+ * @package common\helpers
+ * @desc: ip hekper
+ * @name: IpHelper
+ * @author xucongbin
+ * @date 2020/8/142:12 下午
+ */
 class IpHelper extends \yii\helpers\IpHelper
 {
     /**

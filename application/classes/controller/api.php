@@ -1,5 +1,12 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Class Controller_Api
+ * @desc: api controller
+ * @name: Controller_Api
+ * @author xucongbin
+ * @date 2020/8/142:11 下午
+ */
 class Controller_Api extends Controller
 {
 	

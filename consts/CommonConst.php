@@ -3,11 +3,12 @@
 namespace common\consts;
 
 /**
- * 公用常量
- *
  * Class CommonConst
- * Author: guoliuyong
- * Date: 2019-12-23 14:37
+ * @package common\consts
+ * @desc: common const
+ * @name: CommonConst
+ * @author xucongbin
+ * @date 2020/8/142:12 下午
  */
 class CommonConst
 {
