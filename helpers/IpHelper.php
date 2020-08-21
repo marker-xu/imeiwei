@@ -20,22 +20,36 @@ class IpHelper extends \yii\helpers\IpHelper
      */
     public static function getUserIP()
     {
-        if (getenv('HTTP_CLIENT_IP')) {
+        if (getenv('HTTP_CLIENT_IP'))
+        {
             $ip = getenv('HTTP_CLIENT_IP');
-        } elseif (getenv('HTTP_X_FORWARDED_FOR')) {
+        }
+        elseif (getenv('HTTP_X_FORWARDED_FOR'))
+        {
             $ip = getenv('HTTP_X_FORWARDED_FOR');
-        } elseif (getenv('HTTP_X_FORWARDED')) {
+        }
+        elseif (getenv('HTTP_X_FORWARDED'))
+        {
             $ip = getenv('HTTP_X_FORWARDED');
-        } elseif (getenv('HTTP_FORWARDED_FOR')) {
+        }
+        elseif (getenv('HTTP_FORWARDED_FOR'))
+        {
             $ip = getenv('HTTP_FORWARDED_FOR');
-        } elseif (getenv('HTTP_FORWARDED')) {
+        }
+        elseif (getenv('HTTP_FORWARDED'))
+        {
             $ip = getenv('HTTP_FORWARDED');
-        } elseif (getenv('REMOTE_ADDR')) {
+        }
+        elseif (getenv('REMOTE_ADDR'))
+        {
             $ip = $_SERVER['REMOTE_ADDR'];
-        } else {
+        }
+        else
+        {
             $ip = 'unknown';
         }
-        if ($pos = strpos($ip, ',')) {
+        if ($pos = strpos($ip, ','))
+        {
             $ip = substr($ip, 0, $pos);
         }
         return $ip;

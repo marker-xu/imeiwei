@@ -18,4 +18,5 @@ class TimeConst
     const WEEK   = 604800; // 周
     const DAY    = 86400;  // 日
     const MINUTE = 60;     // 分
+    const HOUR   = 3600;     // 分
 }

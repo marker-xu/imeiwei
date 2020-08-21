@@ -7,6 +7,7 @@ namespace common\consts;
  * @package common\consts
  * @desc: 绑定状态
  * @name: BindConst
+ * @author marker
  * @date 2019/12/271:50 PM
  */
 class BindConst

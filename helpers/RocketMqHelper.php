@@ -13,7 +13,7 @@ use Yii;
  * @package common\helpers
  * @desc: rocket mq
  * @name: RocketMqHelper
- * @author xucongbin
+ * @author marker
  * @date 2019/12/282:27 PM
  */
 class RocketMqHelper
